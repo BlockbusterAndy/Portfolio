@@ -6,12 +6,6 @@ import { TextPlugin } from "gsap/TextPlugin";
 const Navbar = () => {
     gsap.registerPlugin(useGSAP, TextPlugin);
 
-    useGSAP(
-        () => {
-
-        }
-    );
-
     const changeText = () => {
         gsap.to("#changeText", {duration: 1, text: "aniket jadhav"})
         //add className drop-shadow-glow
