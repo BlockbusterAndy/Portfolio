@@ -28,7 +28,7 @@ const Hero = () => {
                     </div>
                 </div>
             </section>
-            <section className='w-1/2 overflow-hidden rounded-xl h-min'>
+            <section className='w-1/2 overflow-hidden rounded-xl h-min' id='rightSection'>
                 <img src="photo.jpg" alt="my portrait"  />
             </section>
         </div>
