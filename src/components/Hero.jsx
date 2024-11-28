@@ -29,7 +29,7 @@ const Hero = () => {
                 </div>
             </section>
             <section className='w-1/2 overflow-hidden rounded-xl h-min' id='rightSection'>
-                <img src="photo.jpg" alt="my portrait"  />
+                <img src="https://res.cloudinary.com/dzflqtsc4/image/upload/f_auto,q_auto/fotial97xckndztms4uw" alt="my portrait"  />
             </section>
         </div>
     </main>
