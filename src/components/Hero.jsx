@@ -93,7 +93,7 @@ const Hero = () => {
               <div className="flex items-center gap-4">
                 <a href="https://www.linkedin.com/in/blockbusterandy"><Linkedin size={50} color="#A3A3A3" className="hover-icon" /></a>
                 <a href="https://www.github.com/blockbusterandy"><Github size={50} color="#A3A3A3" className="hover-icon" /></a>
-                <a href="www.instagram.com/blockbusterandy"><Instagram size={50} color="#A3A3A3" className="hover-icon" /></a>
+                <a href="https://www.instagram.com/blockbusterandy"><Instagram size={50} color="#A3A3A3" className="hover-icon" /></a>
               </div>
               <div
                 className="px-6 py-2 border-2 border-dashed border-primaryText text-primaryText flex gap-2 items-center rounded-full font-semibold cursor-pointer hover-glow"
