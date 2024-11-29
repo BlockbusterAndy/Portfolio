@@ -23,7 +23,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="border-dashed border-2 rounded-2xl border-primaryText mx-4 sm:mx-8 my-4 px-4 sm:px-12 py-4 flex flex-wrap justify-between items-center">
+            <nav className="border-dashed border-2 rounded-2xl border-primaryText min-h-[9vh] mx-4 sm:mx-8 my-4 px-4 sm:px-12 py-4 flex flex-wrap justify-between items-center">
                 <div className="text-primaryText cursor-pointer h-full">
                     <span
                         className="text-[2rem] font-semibold tracking-wider"
