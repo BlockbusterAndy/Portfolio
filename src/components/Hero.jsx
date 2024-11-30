@@ -1,20 +1,22 @@
-import { Linkedin, Github, Instagram, Download } from "lucide-react";
+import { Linkedin, Github, Download, Mail } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import TextPlugin from "gsap/TextPlugin";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 const Hero = () => {
   const resumeUrl = "https://drive.google.com/file/d/1KBRggofEp2DqL9hcYic37GK60hk4qjew/view?usp=drive_link";
 
   useEffect(() => {
     const trackDiv = document.getElementById("trackDiv");
+    const rect = trackDiv.getBoundingClientRect();
   
-    const handleMouseMove = (event) => {
+    const handleMouseMove = (e) => {
+      let x = e.clientX - rect.left;
+      let y = e.clientY - rect.top;
       if (trackDiv) {
-        trackDiv.style.left = `${event.clientX}px`;
-        trackDiv.style.top = `${event.clientY}px`;
-        trackDiv.style.transform = "translate(-100%, -150%)";
+        trackDiv.style.setProperty("--mouse-x", `${x}px`);
+        trackDiv.style.setProperty("--mouse-y", `${y}px`);
       }
     };
   
@@ -58,11 +60,11 @@ const Hero = () => {
   return (
     <>
       <main
-        className="min-h-[87.5vh] overflow-hidden relative"
+        className="min-h-[60vh] overflow-hidden relative"
         id="hero_section"
       >
-        <div className="flex flex-col md:flex-row items-center gap-16 hero mx-[5vw] mt-4 md:mt-[7vh] px-[5vw] py-[10vh] relative glassmorphism overflow-hidden" id="glassmorphism">
-          <div className="hidden bg-primaryText backdrop-blur-2xl opacity-5 md:block " id="trackDiv"></div>
+        <div className="flex flex-col md:flex-row items-center gap-16 hero mx-[10vw] mt-4 md:mt-[9vh] px-[5vw] py-[10vh] relative glassmorphism overflow-hidden" id="glassmorphism">
+          <div className="hidden md:block" id="trackDiv"></div>
           <section
             className="w-full rounded-xl md:w-full"
             id="leftSectionElement"
@@ -70,17 +72,17 @@ const Hero = () => {
             <div className="py-4" id="addBorder">
               <div className="my-4">
                 <h1 className="text-primaryText text-xl md:text-4xl text-center md:text-left leftSectionElement">
-                  Hello,👋 I&apos;m{" "}
+                  Hello👋, I&apos;m{" "}
                   <span className="text-3xl block md:inline md:text-6xl font-medium">
                     Aniket Jadhav
                   </span>
                 </h1>
               </div>
               <div className="my-4">
-                <p className="text-primaryText text-4xl text-center md:text-left md:text-6xl font-bold leading-9 leftSectionElement">
-                  Developer & Web <span className="hidden md:block"> </span>
-                  Designer
-                </p>
+                <h2 className="text-primaryText text-4xl text-center md:text-left md:text-6xl font-bold leading-9 leftSectionElement">
+                  Full-Stack Developer & <span className="hidden md:block"> </span>
+                  Web Designer
+                </h2>
               </div>
             </div>
             <div className="mt-4 leftSectionElement">
@@ -91,9 +93,9 @@ const Hero = () => {
             </div>
             <div className="flex flex-col md:flex-row items-center gap-8 mt-6 leftSectionElement">
               <div className="flex items-center gap-4">
-                <a href="https://www.linkedin.com/in/blockbusterandy"><Linkedin size={50} color="#A3A3A3" className="hover-icon" /></a>
-                <a href="https://www.github.com/blockbusterandy"><Github size={50} color="#A3A3A3" className="hover-icon" /></a>
-                <a href="https://www.instagram.com/blockbusterandy"><Instagram size={50} color="#A3A3A3" className="hover-icon" /></a>
+                <a href="https://linkedin.com/in/blockbusterandy" target="_blank"><Linkedin size={50} color="#A3A3A3" className="hover-icon" /></a>
+                <a href="https://github.com/blockbusterandy" target="_blank"><Github size={50} color="#A3A3A3" className="hover-icon" /></a>
+                <a href="mailto:aniketdj19@gmail.com" target="_blank"><Mail size={50} color="#A3A3A3" className="hover-icon" /></a>
               </div>
               <div
                 className="px-6 py-2 border-2 border-dashed border-primaryText text-primaryText flex gap-2 items-center rounded-full font-semibold cursor-pointer hover-glow"

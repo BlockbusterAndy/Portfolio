@@ -21,20 +21,30 @@ body {
 }
 
 #trackDiv {
-  height: 250px;
-  width: 250px;
-  border-radius: 100%;
+  background: radial-gradient( 1000px circle at var(--mouse-x) var(--mouse-y), rgba(72, 236, 241, 0.15), transparent 40%);
+  height: 100%;
+  width: 100%;
   position: absolute;
-  filter: blur(10px);
-  z-index: -1000;
+  left: 0%;
+  z-index: -10;
   pointer-events: none;
+  filter: blur(10px);
 }
 
 .glassmorphism {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(3.2px);
+  backdrop-filter: blur(10.2px);
   -webkit-backdrop-filter: blur(3.2px);
   border: 1px solid rgba(255, 255, 255, 0.19);
+}
+
+.icon-glassmorphism {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10.7px);
+  -webkit-backdrop-filter: blur(10.7px);
+  border: 1px solid rgba(255, 255, 255, 0.47);
 }
