@@ -35,8 +35,8 @@ const ProjectsSection = () => {
 
   return (
     <>
-    <section className="w-full h-[100vh]">
-      <div className="mx-[10vw] my-[5vh] md:mt-[18vh] grid grid-cols-1 md:grid-cols-2 gap-12">
+    <section className="w-full min-h-[100vh]">
+      <div className="mx-[10vw] my-[5vh] md:mt-[18vh] grid grid-cols-1 md:grid-cols-2 gap-16">
         {projects.map((project, index) => (
           <ProjectCard
             key={index}

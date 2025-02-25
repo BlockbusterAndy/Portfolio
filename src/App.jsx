@@ -3,6 +3,7 @@ import Hero from "./components/Hero"
 import AboutSection from "./components/AboutSection"
 import Marquee from "./components/Marquee"
 import ProjectsSection from "./components/ProjectsSection"
+import Footer from "./components/Footer"
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
       <AboutSection />
       <Marquee />
       <ProjectsSection />
+      <Footer />
     </>
   )
 }

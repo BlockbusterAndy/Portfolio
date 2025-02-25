@@ -39,7 +39,7 @@ const Button = ({ link, icon, text }) => {
 const ProjectCard = ({ title, description, onGoing, github, live }) => {
   return (
     <motion.div 
-      className="flex flex-col p-6 sm:p-10 border-2 border-dashed border-primaryText rounded-xl overflow-hidden w-full hover-glow hover:bg-primaryBg"
+      className="flex flex-col p-6 sm:p-10 border-2 border-dashed border-primaryText rounded-xl overflow-hidden w-full"
       whileHover={{ scale: 1.1 }}
     >
       <div className="flex flex-col gap-3 w-full h-full">
