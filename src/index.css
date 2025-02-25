@@ -21,7 +21,7 @@ body {
 }
 
 #trackDiv {
-  background: radial-gradient( 1000px circle at var(--mouse-x) var(--mouse-y), rgba(72, 236, 241, 0.15), transparent 40%);
+  background: radial-gradient( 1000px circle at var(--mouse-x) var(--mouse-y), rgba(160, 223, 252, 0.103), transparent 40%);
   height: 100%;
   width: 100%;
   position: absolute;
