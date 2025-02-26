@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 
 const Hero = () => {
-  const resumeUrl = "https://drive.google.com/file/d/1KBRggofEp2DqL9hcYic37GK60hk4qjew/view?usp=drive_link";
+  const resumeUrl = "https://res.cloudinary.com/dzflqtsc4/image/upload/v1740565464/Aniket_Jadhav_8668443754_ulxzdp.pdf";
 
   useEffect(() => {
     const trackDiv = document.getElementById("trackDiv");
