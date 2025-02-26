@@ -30,20 +30,20 @@ const Footer = () => {
                 <div className="flex flex-col gap-4">
                     <h6 className="text-2xl text-primaryText font-semibold">Socials</h6>
                     <div className="hidden md:flex gap-12 mt-2 text-secondaryText">
-                        <a href="https://www.linkedin.com/in/blockbusterandy/" target="_blank" rel="noopener noreferrer"><Linkedin size={50} className="inline-block hover-icon" /></a>
-                        <a href="" target="_blank" rel="noopener noreferrer"><Github size={50} className="inline-block hover-icon" /></a>
-                        <a href="" target="_blank" rel="noopener noreferrer"><Instagram size={50} className="inline-block hover-icon" /></a>
-                        <a href="" target="_blank" rel="noopener noreferrer"><Twitter size={50} className="inline-block hover-icon" /></a>
-                        <a href="" target="_blank" rel="noopener noreferrer"><Youtube size={50} className="inline-block hover-icon" /></a>
-                        <a href="" target="_blank" rel="noopener noreferrer"><Twitch size={50} className="inline-block hover-icon" /></a>
+                        <a href="https://linkedin.com/in/blockbusterandy/" target="_blank" rel="noopener noreferrer"><Linkedin size={50} className="inline-block hover-icon" /></a>
+                        <a href="https://github.com/blockbusternady" target="_blank" rel="noopener noreferrer"><Github size={50} className="inline-block hover-icon" /></a>
+                        <a href="https://instagram.com/blockbusterandy" target="_blank" rel="noopener noreferrer"><Instagram size={50} className="inline-block hover-icon" /></a>
+                        <a href="https://x.com/blockbusteranady" target="_blank" rel="noopener noreferrer"><Twitter size={50} className="inline-block hover-icon" /></a>
+                        <a href="https://youtube.com/blockbusterandy" target="_blank" rel="noopener noreferrer"><Youtube size={50} className="inline-block hover-icon" /></a>
+                        <a href="https://twitch.com/blockbusterandy" target="_blank" rel="noopener noreferrer"><Twitch size={50} className="inline-block hover-icon" /></a>
                     </div>
                     <div className="flex flex-wrap gap-8 mt-2 text-secondaryText md:hidden">
-                        <a href="https://www.linkedin.com/in/blockbusterandy/" target="_blank" rel="noopener noreferrer"><Linkedin size={25} className="inline-block hover-icon" /></a>
-                        <a href="" target="_blank" rel="noopener noreferrer"><Github size={25} className="inline-block hover-icon" /></a>
-                        <a href="" target="_blank" rel="noopener noreferrer"><Instagram size={25} className="inline-block hover-icon" /></a>
-                        <a href="" target="_blank" rel="noopener noreferrer"><Twitter size={25} className="inline-block hover-icon" /></a>
-                        <a href="" target="_blank" rel="noopener noreferrer"><Youtube size={25} className="inline-block hover-icon" /></a>
-                        <a href="" target="_blank" rel="noopener noreferrer"><Twitch size={25} className="inline-block hover-icon" /></a>
+                        <a href="https://linkedin.com/in/blockbusterandy/" target="_blank" rel="noopener noreferrer"><Linkedin size={25} className="inline-block hover-icon" /></a>
+                        <a href="https://github.com/blockbusternady" target="_blank" rel="noopener noreferrer"><Github size={25} className="inline-block hover-icon" /></a>
+                        <a href="https://instagram.com/blockbusterandy" target="_blank" rel="noopener noreferrer"><Instagram size={25} className="inline-block hover-icon" /></a>
+                        <a href="https://x.com/blockbusteranady" target="_blank" rel="noopener noreferrer"><Twitter size={25} className="inline-block hover-icon" /></a>
+                        <a href="https://youtube.com/blockbusterandy" target="_blank" rel="noopener noreferrer"><Youtube size={25} className="inline-block hover-icon" /></a>
+                        <a href="https://twitch.com/blockbusterandy" target="_blank" rel="noopener noreferrer"><Twitch size={25} className="inline-block hover-icon" /></a>
                     </div>
                 </div>
             </div>
