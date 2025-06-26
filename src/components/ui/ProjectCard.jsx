@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Loader, Check, Github, Link } from "lucide-react";
+import PropTypes from "prop-types";
 
 const InComplete = () => {
   return (
@@ -26,33 +27,66 @@ const Button = ({ link, icon, text }) => {
       target="_blank"
       rel="noopener noreferrer"
       whileHover={{ scale: 1.1 }}
-      className="w-full sm:w-auto"
+      className="w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-3xl"
+      aria-label={`${text} for project`}
     >
-      <button className="flex items-center justify-center sm:justify-start font-semibold gap-2 border border-primaryText rounded-3xl px-4 py-3 w-full sm:w-fit hover:bg-primaryBg hover-glow">
+      <button className="flex items-center justify-center sm:justify-start font-semibold gap-2 border border-primaryText dark:border-primaryText light:border-gray-300 rounded-3xl px-4 py-3 w-full sm:w-fit hover:bg-primaryBg dark:hover:bg-primaryBg light:hover:bg-gray-100 hover-glow transition-all duration-200">
         {icon}
-        <h4 className="text-sm sm:text-lg text-primaryText">{text}</h4>
+        <h4 className="text-sm sm:text-lg text-primaryText dark:text-primaryText light:text-gray-800">{text}</h4>
       </button>
-    </motion.a>
-  );
+    </motion.a>  );
 };
 
-const ProjectCard = ({ title, description, onGoing, github, live }) => {
+Button.propTypes = {
+  link: PropTypes.string.isRequired,
+  icon: PropTypes.element.isRequired,
+  text: PropTypes.string.isRequired,
+};
+
+const ProjectCard = ({ title, description, onGoing, github, live, technologies }) => {
   return (
     <motion.div 
-      className="flex flex-col p-6 sm:p-10 border-2 border-dashed border-primaryText rounded-xl overflow-hidden w-full"
-      whileHover={{ scale: 1.1 }}
+      className="flex flex-col p-4 sm:p-6 border-2 border-dashed border-primaryText rounded-xl overflow-hidden w-full group"
+      whileHover={{ scale: 1.02, y: -5 }}
+      transition={{ duration: 0.3 }}
     >
-      <div className="flex flex-col gap-3 w-full h-full">
-        <h4 className="text-xl sm:text-2xl font-semibold text-primaryText">{title}</h4>
-        <p className="text-sm sm:text-xl text-secondaryText">{description}</p>
+      <div className="flex flex-col gap-2 w-full h-full">
+        <h4 className="text-lg sm:text-xl font-semibold text-primaryText group-hover:text-blue-400 transition-colors">
+          {title}
+        </h4>
+        <p className="text-sm sm:text-base text-secondaryText mb-3">{description}</p>
+        
+        {/* Technologies */}
+        {technologies && (
+          <div className="flex flex-wrap gap-1.5 mb-3">
+            {technologies.map((tech, index) => (
+              <span 
+                key={index}
+                className="px-2 py-1 text-xs bg-blue-400/10 border border-blue-400/20 rounded-md text-blue-400"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        )}
+        
         {onGoing ? <InComplete /> : <Completed />}
       </div>
-      <div className="flex flex-col sm:flex-row justify-center sm:justify-end gap-8 md:gap-8 mt-4 pr-2 sm:pr-8">
-        {github && <Button icon={<Github size={28} color="#A3A3A3" />} text="Github" link={github} />}
-        {live && <Button icon={<Link size={28} color="#A3A3A3" />} text="Live Demo" link={live} />}
+      <div className="flex flex-col sm:flex-row justify-center sm:justify-end gap-4 md:gap-6 mt-3 pr-1 sm:pr-4">
+        {github && <Button icon={<Github size={24} color="#A3A3A3" />} text="Github" link={github} />}
+        {live && <Button icon={<Link size={24} color="#A3A3A3" />} text="Live Demo" link={live} />}
       </div>
     </motion.div>
   );
+};
+
+ProjectCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  onGoing: PropTypes.bool,
+  github: PropTypes.string,
+  live: PropTypes.string,
+  technologies: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default ProjectCard;

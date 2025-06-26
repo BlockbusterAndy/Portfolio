@@ -7,45 +7,140 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
     background-color: #0A0A0A;
+    color: #F9FAFB;
+    overflow-x: hidden;
+}
+
+/* Responsive scaling for different zoom levels */
+@media screen and (min-resolution: 120dpi) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-resolution: 144dpi) {
+  html {
+    font-size: 13px;
+  }
+}
+
+@media screen and (min-resolution: 168dpi) {
+  html {
+    font-size: 12px;
+  }
 }
 
 @layer components {
   .hover-icon {
-    @apply transition-transform transform duration-300 ease-in-out hover:scale-125 hover:-translate-y-2 cursor-pointer hover:drop-shadow-glow;
+    @apply transition-transform transform duration-300 ease-in-out hover:scale-110 hover:-translate-y-1 cursor-pointer hover:drop-shadow-glow;
   }
   .hover-glow {
-    @apply hover:bg-primaryText hover:drop-shadow-glow hover:text-primaryBg hover:border-0 transition-transform transform duration-300 ease-in-out hover:scale-125 hover:-translate-y-2
+    @apply hover:bg-primaryText hover:drop-shadow-glow hover:text-primaryBg hover:border-0 transition-transform transform duration-300 ease-in-out hover:scale-110 hover:-translate-y-1
   }
   
+  .gradient-text {
+    @apply bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent;
+  }
+  
+  .floating-animation {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
 }
 
 #trackDiv {
-  background: radial-gradient( 1000px circle at var(--mouse-x) var(--mouse-y), rgba(160, 223, 252, 0.103), transparent 40%);
+  background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(160, 223, 252, 0.08), transparent 35%);
   height: 100%;
   width: 100%;
   position: absolute;
   left: 0%;
   z-index: -10;
   pointer-events: none;
-  filter: blur(10px);
+  filter: blur(8px);
 }
 
 .glassmorphism {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10.2px);
-  -webkit-backdrop-filter: blur(3.2px);
-  border: 1px solid rgba(255, 255, 255, 0.19);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.glassmorphism-dark {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .icon-glassmorphism {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10.7px);
-  -webkit-backdrop-filter: blur(10.7px);
-  border: 1px solid rgba(255, 255, 255, 0.47);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* High zoom adjustments for 125%+ zoom levels */
+.high-zoom {
+  font-size: 14px;
+}
+
+.high-zoom .hero {
+  padding: 4vh 2vw;
+}
+
+.high-zoom .glassmorphism {
+  padding: 3vh 2vw;
+}
+
+/* Enhanced mobile optimizations */
+@media (max-width: 768px) {
+  .hero {
+    padding: 2vh 1vw;
+    margin: 0 2vw;
+  }
+  
+  .glassmorphism {
+    padding: 2vh 1vw;
+  }
+  
+  /* Improve touch targets on mobile */
+  button, a, .cursor-pointer {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Improved focus styles for accessibility */
+button:focus, 
+a:focus, 
+.focus\:outline-none:focus {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .floating-animation {
+    animation: none;
+  }
 }
