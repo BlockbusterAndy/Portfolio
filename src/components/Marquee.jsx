@@ -20,11 +20,10 @@ const Marquee = () => {
     });
   }, []);
 
-  return (
-    <div className="overflow-hidden relative w-full bg-black py-4 border-t-2 border-b-2 border-dashed border-primaryText" id="marquee">
+  return (    <div className="overflow-hidden relative w-full bg-black py-3 border-t-2 border-b-2 border-dashed border-primaryText" id="marquee">
       <div
         ref={marqueeRef}
-        className="flex whitespace-nowrap text-white text-xl md:text-4xl font-bold tracking-wide text-primaryText"
+        className="flex whitespace-nowrap text-white text-lg md:text-3xl font-bold tracking-wide text-primaryText"
       >
         <span className="marquee-item mx-4">PROJECTS</span>
         <span className="marquee-item mx-4">PROJECTS</span>

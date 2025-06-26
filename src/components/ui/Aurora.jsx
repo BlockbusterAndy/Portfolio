@@ -171,11 +171,17 @@ export default function Aurora(props) {
     });
 
     const mesh = new Mesh(gl, { geometry, program });
-    ctn.appendChild(gl.canvas);
-
-    let animateId = 0;
+    ctn.appendChild(gl.canvas);    let animateId = 0;
+    let lastTime = 0;
+    const targetFPS = 30; // Reduced from default 60fps for better performance
+    const frameInterval = 1000 / targetFPS;
+    
     const update = (t) => {
       animateId = requestAnimationFrame(update);
+      
+      if (t - lastTime < frameInterval) return;
+      lastTime = t;
+      
       const { time = t * 0.01, speed = 1.0 } = propsRef.current;
       program.uniforms.uTime.value = time * speed * 0.1;
       program.uniforms.uAmplitude.value = propsRef.current.amplitude ?? 1.0;
