@@ -31,8 +31,17 @@ export default {
         '2xl': ['1.2rem', { lineHeight: '1.5rem' }],
         '3xl': ['1.5rem', { lineHeight: '1.8rem' }],
         '4xl': ['1.8rem', { lineHeight: '2.1rem' }],
-        '5xl': ['2.4rem', { lineHeight: '2.7rem' }],
-        '6xl': ['3rem', { lineHeight: '3.3rem' }],
+        '5xl': ['2.4rem', { lineHeight: '2.7rem' }],        '6xl': ['3rem', { lineHeight: '3.3rem' }],
+      },
+      animation: {
+        shimmer: 'shimmer 3s ease-in-out infinite',
+      },
+      keyframes: {
+        shimmer: {
+          '0%': { transform: 'translateX(-100%)' },
+          '50%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
       },
     },
     colors:{

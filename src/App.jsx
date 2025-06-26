@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AnimatePresence } from "framer-motion"
 import Navbar from "./components/Navbar"
 import Hero from "./components/Hero"
@@ -10,8 +11,10 @@ import LoadingScreen from "./components/ui/LoadingScreen"
 import PerformanceMonitor from "./components/ui/PerformanceMonitor"
 import DevTools from "./components/ui/DevTools"
 import ScrollToTop from "./components/ui/ScrollToTop"
+import AdminPanel from "./components/AdminPanel"
 
-function App() {
+// Main Portfolio Page Component
+const PortfolioPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showDevTools, setShowDevTools] = useState(false);
 
@@ -29,7 +32,8 @@ function App() {
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);  }, []);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   return (
     <>
@@ -53,6 +57,17 @@ function App() {
         </>
       )}
     </>
+  )
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<PortfolioPage />} />
+        <Route path="/admin" element={<AdminPanel />} />
+      </Routes>
+    </Router>
   )
 }
 

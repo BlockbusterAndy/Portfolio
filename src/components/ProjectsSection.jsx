@@ -1,8 +1,26 @@
 import ProjectCard from './ui/ProjectCard'
 import { motion } from 'framer-motion'
-import projects from '../data/projects' // Assuming you have a projects data file
+import { useProjects } from '../hooks/useProjects'
+import config from '../config/index.js'
 
 const ProjectsSection = () => {
+  const { projects, loading, error } = useProjects(config.USE_API);
+
+  if (loading) {
+    return (
+      <section className="w-full min-h-[80vh] flex items-center justify-center" id="projects">
+        <div className="text-primaryText text-xl">Loading projects...</div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="w-full min-h-[80vh] flex items-center justify-center" id="projects">
+        <div className="text-red-400 text-xl">Error loading projects: {error}</div>
+      </section>
+    );
+  }
 
   return (
     <>

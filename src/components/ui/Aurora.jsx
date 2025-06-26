@@ -1,5 +1,28 @@
 import { Renderer, Program, Mesh, Color, Triangle } from "ogl";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+// WebGL capability check
+const checkWebGLSupport = () => {
+  try {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl2') || canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (!gl) {
+      return false;
+    }
+    // Test if we can create basic WebGL resources
+    const renderer = new Renderer({ canvas, alpha: true });
+    if (!renderer.gl) {
+      return false;
+    }
+    // Clean up test resources
+    const ext = renderer.gl.getExtension('WEBGL_lose_context');
+    if (ext) ext.loseContext();
+    return true;
+  } catch (error) {
+    console.warn('WebGL support check failed:', error);
+    return false;
+  }
+};
 
 const VERT = `#version 300 es
 in vec2 position;
@@ -119,94 +142,143 @@ export default function Aurora(props) {
   propsRef.current = props;
 
   const ctnDom = useRef(null);
+  const [webglSupported, setWebglSupported] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     const ctn = ctnDom.current;
     if (!ctn) return;
 
-    const renderer = new Renderer({
-      alpha: true,
-      premultipliedAlpha: true,
-      antialias: true
-    });
-    const gl = renderer.gl;
-    gl.clearColor(0, 0, 0, 0);
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-    gl.canvas.style.backgroundColor = 'transparent';
+    // Check WebGL support first
+    if (!checkWebGLSupport()) {
+      setWebglSupported(false);
+      return;
+    }
 
+    let renderer;
+    let gl;
     let program;
+    let mesh;
+    let animateId = 0;
 
-    function resize() {
-      if (!ctn) return;
-      const width = ctn.offsetWidth;
-      const height = ctn.offsetHeight;
-      renderer.setSize(width, height);
-      if (program) {
-        program.uniforms.uResolution.value = [width, height];
-      }
-    }
-    window.addEventListener("resize", resize);
-
-    const geometry = new Triangle(gl);
-    if (geometry.attributes.uv) {
-      delete geometry.attributes.uv;
-    }
-
-    const colorStopsArray = colorStops.map((hex) => {
-      const c = new Color(hex);
-      return [c.r, c.g, c.b];
-    });
-
-    program = new Program(gl, {
-      vertex: VERT,
-      fragment: FRAG,
-      uniforms: {
-        uTime: { value: 0 },
-        uAmplitude: { value: amplitude },
-        uColorStops: { value: colorStopsArray },
-        uResolution: { value: [ctn.offsetWidth, ctn.offsetHeight] },
-        uBlend: { value: blend }
-      }
-    });
-
-    const mesh = new Mesh(gl, { geometry, program });
-    ctn.appendChild(gl.canvas);    let animateId = 0;
-    let lastTime = 0;
-    const targetFPS = 30; // Reduced from default 60fps for better performance
-    const frameInterval = 1000 / targetFPS;
-    
-    const update = (t) => {
-      animateId = requestAnimationFrame(update);
+    try {
+      renderer = new Renderer({
+        alpha: true,
+        premultipliedAlpha: true,
+        antialias: true
+      });
       
-      if (t - lastTime < frameInterval) return;
-      lastTime = t;
+      gl = renderer.gl;
+      if (!gl) {
+        throw new Error('Failed to get WebGL context');
+      }
+
+      gl.clearColor(0, 0, 0, 0);
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+      gl.canvas.style.backgroundColor = 'transparent';
+
+      function resize() {
+        if (!ctn || !renderer) return;
+        try {
+          const width = ctn.offsetWidth;
+          const height = ctn.offsetHeight;
+          renderer.setSize(width, height);
+          if (program) {
+            program.uniforms.uResolution.value = [width, height];
+          }
+        } catch (error) {
+          console.warn('Aurora resize error:', error);
+        }
+      }
       
-      const { time = t * 0.01, speed = 1.0 } = propsRef.current;
-      program.uniforms.uTime.value = time * speed * 0.1;
-      program.uniforms.uAmplitude.value = propsRef.current.amplitude ?? 1.0;
-      program.uniforms.uBlend.value = propsRef.current.blend ?? blend;
-      const stops = propsRef.current.colorStops ?? colorStops;
-      program.uniforms.uColorStops.value = stops.map((hex) => {
+      window.addEventListener("resize", resize);
+
+      const geometry = new Triangle(gl);
+      if (geometry.attributes.uv) {
+        delete geometry.attributes.uv;
+      }
+
+      const colorStopsArray = colorStops.map((hex) => {
         const c = new Color(hex);
         return [c.r, c.g, c.b];
       });
-      renderer.render({ scene: mesh });
-    };
-    animateId = requestAnimationFrame(update);
 
-    resize();
+      program = new Program(gl, {
+        vertex: VERT,
+        fragment: FRAG,
+        uniforms: {
+          uTime: { value: 0 },
+          uAmplitude: { value: amplitude },
+          uColorStops: { value: colorStopsArray },
+          uResolution: { value: [ctn.offsetWidth, ctn.offsetHeight] },
+          uBlend: { value: blend }
+        }
+      });
 
-    return () => {
-      cancelAnimationFrame(animateId);
-      window.removeEventListener("resize", resize);
-      if (ctn && gl.canvas.parentNode === ctn) {
-        ctn.removeChild(gl.canvas);
-      }
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
-    };
+      mesh = new Mesh(gl, { geometry, program });
+      ctn.appendChild(gl.canvas);
+
+      let lastTime = 0;
+      const targetFPS = 30; // Reduced from default 60fps for better performance
+      const frameInterval = 1000 / targetFPS;
+      
+      const update = (t) => {
+        try {
+          animateId = requestAnimationFrame(update);
+          
+          if (t - lastTime < frameInterval) return;
+          lastTime = t;
+          
+          const { time = t * 0.01, speed = 1.0 } = propsRef.current;
+          program.uniforms.uTime.value = time * speed * 0.1;
+          program.uniforms.uAmplitude.value = propsRef.current.amplitude ?? 1.0;
+          program.uniforms.uBlend.value = propsRef.current.blend ?? blend;
+          const stops = propsRef.current.colorStops ?? colorStops;
+          program.uniforms.uColorStops.value = stops.map((hex) => {
+            const c = new Color(hex);
+            return [c.r, c.g, c.b];
+          });
+          renderer.render({ scene: mesh });
+        } catch (error) {
+          console.warn('Aurora animation error:', error);
+          cancelAnimationFrame(animateId);
+        }
+      };
+      
+      animateId = requestAnimationFrame(update);
+      resize();
+
+      return () => {
+        try {
+          cancelAnimationFrame(animateId);
+          window.removeEventListener("resize", resize);
+          if (ctn && gl?.canvas && gl.canvas.parentNode === ctn) {
+            ctn.removeChild(gl.canvas);
+          }
+          const ext = gl?.getExtension("WEBGL_lose_context");
+          if (ext) ext.loseContext();
+        } catch (error) {
+          console.warn('Aurora cleanup error:', error);
+        }
+      };
+    } catch (error) {
+      console.error('Aurora initialization error:', error);
+      setHasError(true);
+      setWebglSupported(false);
+      return;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amplitude]);
+
+  // Fallback UI when WebGL is not supported or has errors
+  if (!webglSupported || hasError) {
+    return (
+      <div className="w-full h-full bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-green-500/10 animate-pulse">
+        <div className="w-full h-full bg-gradient-to-r from-transparent via-blue-400/5 to-transparent animate-[shimmer_3s_ease-in-out_infinite]" />
+      </div>
+    );
+  }
 
   return <div ref={ctnDom} className="w-full h-full" />;
 }

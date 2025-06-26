@@ -1,5 +1,6 @@
 import { Linkedin, Github, Download, Mail } from "lucide-react";
 import Aurora from "./ui/Aurora";
+import ErrorBoundary from "./ui/ErrorBoundary";
 import TechPill from "./ui/TechPill";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
@@ -55,16 +56,17 @@ const Hero = () => {
         block: 'start'
       });
     }
-  };
-  return (
+  };  return (
     <>
     <aside className="absolute top-0 left-0 w-full h-[85vh] md:w-full md:h-full -z-10" id="aurora">
-      <Aurora
-          colorStops={["#00D8FF", "#7CFF67", "#00D8FF"]}
-          blend={0.5}
-          amplitude={1.0}
-          speed={0.5}
-      />
+      <ErrorBoundary fallback={<div className="w-full h-full bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 animate-shimmer"></div>}>
+        <Aurora
+            colorStops={["#00D8FF", "#7CFF67", "#00D8FF"]}
+            blend={0.5}
+            amplitude={1.0}
+            speed={0.5}
+        />
+      </ErrorBoundary>
     </aside>
       <main className="min-h-[65vh] overflow-hidden relative" id="hero_section" role="main">
         {/* Status Badge */}
