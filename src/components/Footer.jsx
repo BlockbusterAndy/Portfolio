@@ -9,7 +9,11 @@ const Footer = () => {
                 <div className="flex flex-col gap-3">
                     <h6 className="text-xl text-primaryText font-semibold">💡 Let's Collaborate!</h6>
                     <p className="text-base text-secondaryText">Have an idea or project in mind? I'd love to hear from you. Drop me a message, and let's create something amazing together!</p>
-                    <button className="flex items-center gap-2 ml-1 mt-3 px-3 py-1.5 w-fit border border-primaryText text-primaryText rounded-xl transition duration-300 ease-in-out hover:font-semibold hover-glow">
+                    <button 
+                        className="flex items-center gap-2 ml-1 mt-3 px-3 py-1.5 w-fit border border-primaryText text-primaryText rounded-xl transition duration-300 ease-in-out hover:font-semibold hover-glow"
+                        onClick={() => window.location.href = 'mailto:aniketdj19@gmail.com'}
+                        aria-label='Send Email'
+                    >
                         Send Email 
                         <Send size={18} />
                     </button>
@@ -51,7 +55,7 @@ const Footer = () => {
                 <ContactForm />
             </div>
         </div>
-        <div className="flex justify-center items-center w-full h-12 bg-primaryText text-white text-base text-center font-semibold">
+        <div className="flex justify-center items-center w-full h-12 bg-primaryText text-primaryBg text-base text-center font-semibold">
             © 2024 Aniket D. Jadhav. All rights reserved.
         </div>
     </footer>

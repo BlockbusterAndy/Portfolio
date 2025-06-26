@@ -40,6 +40,13 @@ const Hero = () => {
     window.open(resumeUrl, "_blank");
   };
 
+  const openWhatsApp = () => {
+    const phoneNumber = "918668443754";
+    const message = "Hi Aniket! I came across your portfolio and would like to discuss a potential opportunity with you.";
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -71,7 +78,7 @@ const Hero = () => {
         >
           <div className="flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/30 rounded-full backdrop-blur-sm">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-green-400 text-sm font-medium">Available for new opportunities</span>
+            <span className="text-gray-400 text-sm font-medium">Available for new opportunities</span>
           </div>
         </motion.div>
 
@@ -119,7 +126,7 @@ const Hero = () => {
                 Web enthusiast crafting seamless interfaces and occasionally shaping their design.
               </p>
               <p className="text-secondaryText/80 text-xs text-center md:text-left md:text-base">
-                🚀 2+ years of experience building modern web applications<br/>
+                🚀 1+ years of experience building modern web applications<br/>
                 🎨 Passionate about creating user-centered digital experiences<br/>
                 📍 Based in Pune, India
               </p>
@@ -137,7 +144,7 @@ const Hero = () => {
                 <div className="text-secondaryText text-xs">Projects</div>
               </div>
               <div className="text-center">
-                <div className="text-primaryText text-lg font-bold" aria-label="2 plus years of experience">2+</div>
+                <div className="text-primaryText text-lg font-bold" aria-label="2 plus years of experience">1+</div>
                 <div className="text-secondaryText text-xs">Years Exp</div>
               </div>
               <div className="text-center">
@@ -189,11 +196,11 @@ const Hero = () => {
                   <Download size={20} />
                   <span className="text-base">Resume</span>
                 </motion.button>
-                  <motion.button
+                <motion.button
                   whileHover={{ scale: 1.1 }}
                   className="px-4 py-1.5 bg-primaryText text-primaryBg flex gap-2 items-center rounded-full font-semibold cursor-pointer transition-all duration-300 hover:bg-primaryText/90 focus:outline-none focus:ring-2 focus:ring-green-400"
-                  onClick={() => scrollToSection('aboutMeSection')}
-                  aria-label="Navigate to about section"
+                  onClick={openWhatsApp}
+                  aria-label="Contact me on WhatsApp"
                 >
                   <span className="text-base">Let&apos;s Talk</span>
                 </motion.button>
@@ -210,23 +217,13 @@ const Hero = () => {
             <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-br from-green-400/20 to-blue-400/20 rounded-full blur-xl"></div>
             
             {/* Image Container */}
-            <div className="relative overflow-hidden rounded-2xl border-2 border-primaryText/20 p-1 bg-gradient-to-br from-blue-400/10 to-green-400/10 backdrop-blur-sm">
+            <div className="relative overflow-hidden rounded-2xl border-2 border-primaryText/20 p-1 bg-gradient-to-br from-blue-400/10 to-green-400/10 backdrop-blur-sm md:w-[350px] md:h-[350px]">
               <img
-                src="https://res.cloudinary.com/dzflqtsc4/image/upload/f_auto,q_auto,w_350,h_350,c_fill,g_face/fotial97xckndztms4uw"
+                src="/web_dev.png"
                 alt="Aniket Jadhav - Full Stack Developer"
-                className="w-full h-auto rounded-xl object-cover transform hover:scale-105 transition-transform duration-500"
+                className="w-full h-full rounded-xl object-cover transform hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
-              
-              {/* Floating Badge */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.2, duration: 0.5 }}
-                className="absolute -bottom-2 -right-2 bg-primaryText text-primaryBg px-3 py-1 rounded-full text-xs font-semibold shadow-lg"
-              >
-                🚀 Ready to code!
-              </motion.div>
             </div>
             
             {/* Background Pattern */}

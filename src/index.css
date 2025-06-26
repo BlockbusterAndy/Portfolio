@@ -78,6 +78,12 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
+.glassmorphism-dark {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
 .icon-glassmorphism {
   background: rgba(255, 255, 255, 0.08);
   border-radius: 12px;
