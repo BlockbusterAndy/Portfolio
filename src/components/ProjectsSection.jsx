@@ -1,10 +1,9 @@
 import ProjectCard from './ui/ProjectCard'
 import { motion } from 'framer-motion'
 import { useProjects } from '../hooks/useProjects'
-import config from '../config/index.js'
 
 const ProjectsSection = () => {
-  const { projects, loading, error } = useProjects(config.USE_API);
+  const { projects, loading, error } = useProjects();
 
   if (loading) {
     return (

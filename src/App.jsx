@@ -6,6 +6,7 @@ import Hero from "./components/Hero"
 import AboutSection from "./components/AboutSection"
 import Marquee from "./components/Marquee"
 import ProjectsSection from "./components/ProjectsSection"
+import TestimonialsSection from "./components/TestimonialsSection"
 import Footer from "./components/Footer"
 import LoadingScreen from "./components/ui/LoadingScreen"
 import PerformanceMonitor from "./components/ui/PerformanceMonitor"
@@ -46,12 +47,12 @@ const PortfolioPage = () => {
       </AnimatePresence>
       
       {!isLoading && (
-        <>
-          <Navbar />
+        <>          <Navbar />
           <Hero />
           <AboutSection />
           <Marquee />
           <ProjectsSection />
+          <TestimonialsSection />
           <Footer />
           <ScrollToTop />
         </>

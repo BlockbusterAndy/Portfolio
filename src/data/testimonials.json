@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Sarah Johnson",
+    "role": "Product Manager",
+    "company": "TechCorp Inc.",
+    "content": "Working with this developer was an absolute pleasure. They delivered exceptional results on time and exceeded our expectations. The attention to detail and innovative solutions provided were remarkable.",
+    "rating": 5
+  },
+  {
+    "id": 2,
+    "name": "Michael Chen",
+    "role": "CTO",
+    "company": "StartupX",
+    "content": "The technical expertise and problem-solving skills demonstrated were outstanding. The project was completed with clean, maintainable code and excellent documentation. Highly recommended!",
+    "rating": 5
+  },
+  {
+    "id": 3,
+    "name": "Emily Rodriguez",
+    "role": "Design Lead",
+    "company": "Creative Studio",
+    "content": "Perfect collaboration between design and development. They brought our vision to life with pixel-perfect implementation and smooth animations. The user experience is fantastic!",
+    "rating": 5
+  },
+  {
+    "id": 4,
+    "name": "David Park",
+    "role": "Founder",
+    "company": "InnovateLab",
+    "content": "Exceptional full-stack development skills with great communication throughout the project. The final product exceeded our requirements and was delivered ahead of schedule.",
+    "rating": 5
+  },
+  {
+    "id": 5,
+    "name": "Lisa Wang",
+    "role": "Marketing Director",
+    "company": "GrowthTech",
+    "content": "The website performance improvements and modern design transformed our online presence. The developer's expertise in optimization and user experience is evident in every detail.",
+    "rating": 5
+  },
+  {
+    "id": 6,
+    "name": "Alex Thompson",
+    "role": "Senior Developer",
+    "company": "DevSolutions",
+    "content": "Clean architecture, best practices, and excellent code quality. Great to collaborate with and always ready to go the extra mile to ensure project success.",
+    "rating": 5
+  }
+]
