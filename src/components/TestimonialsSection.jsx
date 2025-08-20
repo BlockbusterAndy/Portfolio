@@ -17,6 +17,11 @@ const TestimonialsSection = () => {
     threshold: 0.1,
   });
 
+  // Don't render anything if there are no testimonials
+  if (!testimonials || testimonials.length === 0) {
+    return null;
+  }
+
   const StarRating = ({ rating }) => {
     return (
       <div className="flex gap-1 mb-4">
