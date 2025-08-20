@@ -19,20 +19,34 @@ const ContactForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus('loading');
-    
-    // Simulate form submission
-    setTimeout(() => {
-      if (formData.name && formData.email && formData.message) {
+    try {
+      e.preventDefault();
+      setStatus('loading');
+      const url = "https://formspree.io/f/xvgqjwod"
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
         setStatus('success');
         setFormData({ name: '', email: '', message: '' });
-        setTimeout(() => setStatus('idle'), 3000);
       } else {
-        setStatus('error');
-        setTimeout(() => setStatus('idle'), 3000);
+        throw new Error('Network response was not ok');
       }
-    }, 1000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setStatus('error');
+    } finally {
+      setTimeout(() => {
+        setStatus('idle');
+      }, 3000);
+    }
   };
 
   return (
