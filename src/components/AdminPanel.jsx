@@ -1,21 +1,32 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Edit, Trash2, Save, X, Eye, EyeOff, Home, RefreshCw, AlertCircle, Loader, CheckCircle } from 'lucide-react';
+import { Plus, Edit, Trash2, Save, X, Eye, EyeOff, Home, RefreshCw, AlertCircle, Loader, CheckCircle, Star, MessageSquare, FolderOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useProjects } from '../hooks/useProjects';
+import { useTestimonials } from '../hooks/useTestimonials';
 
 const AdminPanel = () => {
   const navigate = useNavigate();
   
   const { 
     projects, 
-    loading, 
+    loading: projectsLoading, 
     addProject, 
     updateProject, 
     deleteProject, 
     exportProjects 
   } = useProjects();
   
+  const { 
+    testimonials, 
+    loading: testimonialsLoading, 
+    addTestimonial, 
+    updateTestimonial, 
+    deleteTestimonial, 
+    exportTestimonials 
+  } = useTestimonials();
+  
+  const [activeTab, setActiveTab] = useState('projects');
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -25,9 +36,6 @@ const AdminPanel = () => {
   const [authError, setAuthError] = useState('');
   const [operationLoading, setOperationLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-  
-  // Simple password protection
-  const ADMIN_PASSWORD = 'admin2025';
 
   const [formData, setFormData] = useState({
     title: '',
@@ -38,6 +46,14 @@ const AdminPanel = () => {
     technologies: []
   });
 
+  const [testimonialFormData, setTestimonialFormData] = useState({
+    name: '',
+    role: '',
+    company: '',
+    content: '',
+    rating: 5
+  });
+
   const [techInput, setTechInput] = useState('');
 
   const handleLogin = async () => {
@@ -46,7 +62,7 @@ const AdminPanel = () => {
     
     try {
       // Simple password check
-      if (password === ADMIN_PASSWORD) {
+      if (password === import.meta.env.VITE_SECRET_PASS) {
         setIsAuthenticated(true);
         showSuccess('Logged in successfully!');
       } else {
@@ -72,25 +88,42 @@ const AdminPanel = () => {
   };
 
   const resetForm = () => {
-    setFormData({
-      title: '',
-      description: '',
-      github: '',
-      live: '',
-      onGoing: false,
-      technologies: []
-    });
-    setTechInput('');
+    if (activeTab === 'projects') {
+      setFormData({
+        title: '',
+        description: '',
+        github: '',
+        live: '',
+        onGoing: false,
+        technologies: []
+      });
+      setTechInput('');
+    } else {
+      setTestimonialFormData({
+        name: '',
+        role: '',
+        company: '',
+        content: '',
+        rating: 5
+      });
+    }
     setIsEditing(false);
     setEditingIndex(null);
   };
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+    if (activeTab === 'projects') {
+      setFormData(prev => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value
+      }));
+    } else {
+      setTestimonialFormData(prev => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value
+      }));
+    }
   };
 
   const addTechnology = () => {
@@ -112,42 +145,78 @@ const AdminPanel = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.title.trim() || !formData.description.trim()) {
-      setAuthError('Title and description are required!');
-      return;
-    }
-
-    setOperationLoading(true);
-    try {
-      if (isEditing) {
-        await updateProject(editingIndex, formData);
-        showSuccess('Project updated successfully!');
-      } else {
-        await addProject(formData);
-        showSuccess('Project added successfully!');
+    
+    if (activeTab === 'projects') {
+      if (!formData.title.trim() || !formData.description.trim()) {
+        setAuthError('Title and description are required!');
+        return;
       }
-      resetForm();
-      setAuthError('');
-    } catch (error) {
-      setAuthError(error.message || 'Operation failed');
-    } finally {
-      setOperationLoading(false);
+      
+      setOperationLoading(true);
+      try {
+        if (isEditing) {
+          await updateProject(editingIndex, formData);
+          showSuccess('Project updated successfully!');
+        } else {
+          await addProject(formData);
+          showSuccess('Project added successfully!');
+        }
+        resetForm();
+        setAuthError('');
+      } catch (error) {
+        setAuthError(error.message || 'Operation failed');
+      } finally {
+        setOperationLoading(false);
+      }
+    } else {
+      if (!testimonialFormData.name.trim() || !testimonialFormData.content.trim()) {
+        setAuthError('Name and content are required!');
+        return;
+      }
+      
+      setOperationLoading(true);
+      try {
+        if (isEditing) {
+          await updateTestimonial(editingIndex, testimonialFormData);
+          showSuccess('Testimonial updated successfully!');
+        } else {
+          await addTestimonial(testimonialFormData);
+          showSuccess('Testimonial added successfully!');
+        }
+        resetForm();
+        setAuthError('');
+      } catch (error) {
+        setAuthError(error.message || 'Operation failed');
+      } finally {
+        setOperationLoading(false);
+      }
     }
   };
 
   const handleEdit = (index) => {
-    const project = projects[index];
-    setFormData(project);
+    if (activeTab === 'projects') {
+      const project = projects[index];
+      setFormData(project);
+    } else {
+      const testimonial = testimonials[index];
+      setTestimonialFormData(testimonial);
+    }
     setIsEditing(true);
     setEditingIndex(index);
   };
 
   const handleDelete = async (index) => {
-    if (window.confirm('Are you sure you want to delete this project?')) {
+    const itemType = activeTab === 'projects' ? 'project' : 'testimonial';
+    if (window.confirm(`Are you sure you want to delete this ${itemType}?`)) {
       setOperationLoading(true);
       try {
-        await deleteProject(index);
-        showSuccess('Project deleted successfully!');
+        if (activeTab === 'projects') {
+          await deleteProject(index);
+          showSuccess('Project deleted successfully!');
+        } else {
+          await deleteTestimonial(index);
+          showSuccess('Testimonial deleted successfully!');
+        }
       } catch (error) {
         setAuthError(error.message || 'Delete failed');
       } finally {
@@ -158,15 +227,27 @@ const AdminPanel = () => {
 
   const handleExportData = async () => {
     try {
-      const data = await exportProjects();
-      const dataStr = JSON.stringify(data, null, 2);
-      const dataBlob = new Blob([dataStr], { type: 'application/json' });
-      const url = URL.createObjectURL(dataBlob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'projects.json';
-      link.click();
-      showSuccess('Projects exported successfully!');
+      if (activeTab === 'projects') {
+        const data = await exportProjects();
+        const dataStr = JSON.stringify(data, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'projects.json';
+        link.click();
+        showSuccess('Projects exported successfully!');
+      } else {
+        const data = await exportTestimonials();
+        const dataStr = JSON.stringify(data, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'testimonials.json';
+        link.click();
+        showSuccess('Testimonials exported successfully!');
+      }
     } catch (error) {
       setAuthError(error.message || 'Export failed');
     }
@@ -318,252 +399,458 @@ const AdminPanel = () => {
         )}
 
         {/* Loading State */}
-        {loading && (
+        {(projectsLoading || testimonialsLoading) && (
           <div className="text-center py-8">
             <Loader size={40} className="animate-spin mx-auto mb-4" />
-            <p className="text-gray-400">Loading projects...</p>
+            <p className="text-gray-400">Loading {activeTab}...</p>
           </div>
         )}
 
         {/* Main Content */}
-        {!loading && (
-          <div className="grid lg:grid-cols-2 gap-8">
+        {!projectsLoading && !testimonialsLoading && (
+          <>
+            {/* Tab Navigation */}
+            <div className="bg-gray-800 p-1 rounded-xl border border-gray-700 mb-8 flex">
+              <button
+                onClick={() => setActiveTab('projects')}
+                className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 ${
+                  activeTab === 'projects'
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-400 hover:text-white hover:bg-gray-700'
+                }`}
+              >
+                <FolderOpen size={20} />
+                Projects ({projects.length})
+              </button>
+              <button
+                onClick={() => {
+                  setActiveTab('testimonials');
+                  resetForm();
+                }}
+                className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 ${
+                  activeTab === 'testimonials'
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-400 hover:text-white hover:bg-gray-700'
+                }`}
+              >
+                <MessageSquare size={20} />
+                Testimonials ({testimonials.length})
+              </button>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-8">
             {/* Form Section */}
             <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
               <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
                 <Plus size={24} />
-                {isEditing ? 'Edit Project' : 'Add New Project'}
+                {isEditing 
+                  ? `Edit ${activeTab === 'projects' ? 'Project' : 'Testimonial'}` 
+                  : `Add New ${activeTab === 'projects' ? 'Project' : 'Testimonial'}`
+                }
               </h2>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Project Title *</label>
-                  <input
-                    type="text"
-                    name="title"
-                    value={formData.title}
-                    onChange={handleInputChange}
-                    placeholder="Enter project title"
-                    className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">Description *</label>
-                  <textarea
-                    name="description"
-                    value={formData.description}
-                    onChange={handleInputChange}
-                    placeholder="Enter project description"
-                    rows="4"
-                    className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-vertical"
-                    required
-                  />
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4">
+              {activeTab === 'projects' ? (
+                <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2">GitHub URL</label>
-                    <input
-                      type="url"
-                      name="github"
-                      value={formData.github}
-                      onChange={handleInputChange}
-                      placeholder="https://github.com/..."
-                      className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Live Demo URL</label>
-                    <input
-                      type="url"
-                      name="live"
-                      value={formData.live}
-                      onChange={handleInputChange}
-                      placeholder="https://example.com"
-                      className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">Technologies</label>
-                  <div className="flex gap-2 mb-2">
+                    <label className="block text-sm font-medium mb-2">Project Title *</label>
                     <input
                       type="text"
-                      value={techInput}
-                      onChange={(e) => setTechInput(e.target.value)}
-                      placeholder="Enter technology name"
-                      className="flex-1 bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTechnology())}
+                      name="title"
+                      value={formData.title}
+                      onChange={handleInputChange}
+                      placeholder="Enter project title"
+                      className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
                     />
-                    <button
-                      type="button"
-                      onClick={addTechnology}
-                      className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
-                    >
-                      Add
-                    </button>
                   </div>
-                  <div className="flex flex-wrap gap-2">
-                    {formData.technologies.map((tech, index) => (
-                      <span
-                        key={index}
-                        className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm flex items-center gap-2"
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Description *</label>
+                    <textarea
+                      name="description"
+                      value={formData.description}
+                      onChange={handleInputChange}
+                      placeholder="Enter project description"
+                      rows="4"
+                      className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-vertical"
+                      required
+                    />
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">GitHub URL</label>
+                      <input
+                        type="url"
+                        name="github"
+                        value={formData.github}
+                        onChange={handleInputChange}
+                        placeholder="https://github.com/..."
+                        className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Live Demo URL</label>
+                      <input
+                        type="url"
+                        name="live"
+                        value={formData.live}
+                        onChange={handleInputChange}
+                        placeholder="https://example.com"
+                        className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Technologies</label>
+                    <div className="flex gap-2 mb-2">
+                      <input
+                        type="text"
+                        value={techInput}
+                        onChange={(e) => setTechInput(e.target.value)}
+                        placeholder="Enter technology name"
+                        className="flex-1 bg-gray-700 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTechnology())}
+                      />
+                      <button
+                        type="button"
+                        onClick={addTechnology}
+                        className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
                       >
-                        {tech}
-                        <button
-                          type="button"
-                          onClick={() => removeTechnology(tech)}
-                          className="hover:text-red-300"
+                        Add
+                      </button>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {formData.technologies.map((tech, index) => (
+                        <span
+                          key={index}
+                          className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm flex items-center gap-2"
                         >
-                          <X size={14} />
-                        </button>
-                      </span>
-                    ))}
+                          {tech}
+                          <button
+                            type="button"
+                            onClick={() => removeTechnology(tech)}
+                            className="hover:text-red-300"
+                          >
+                            <X size={14} />
+                          </button>
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                <div className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    id="onGoing"
-                    name="onGoing"
-                    checked={formData.onGoing}
-                    onChange={handleInputChange}
-                    className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
-                  />
-                  <label htmlFor="onGoing" className="text-sm">
-                    This project is ongoing
-                  </label>
-                </div>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      id="onGoing"
+                      name="onGoing"
+                      checked={formData.onGoing}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
+                    />
+                    <label htmlFor="onGoing" className="text-sm">
+                      This project is ongoing
+                    </label>
+                  </div>
 
-                <div className="flex gap-4 pt-4">
-                  <button
-                    type="submit"
-                    disabled={operationLoading}
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
-                  >
-                    {operationLoading ? (
-                      <>
-                        <Loader size={20} className="animate-spin" />
-                        {isEditing ? 'Updating...' : 'Adding...'}
-                      </>
-                    ) : (
-                      <>
-                        <Save size={20} />
-                        {isEditing ? 'Update Project' : 'Add Project'}
-                      </>
-                    )}
-                  </button>
-
-                  {isEditing && (
+                  <div className="flex gap-4 pt-4">
                     <button
-                      type="button"
-                      onClick={resetForm}
-                      className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center gap-2"
+                      type="submit"
+                      disabled={operationLoading}
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
                     >
-                      <X size={20} />
-                      Cancel
+                      {operationLoading ? (
+                        <>
+                          <Loader size={20} className="animate-spin" />
+                          {isEditing ? 'Updating...' : 'Adding...'}
+                        </>
+                      ) : (
+                        <>
+                          <Save size={20} />
+                          {isEditing ? 'Update Project' : 'Add Project'}
+                        </>
+                      )}
                     </button>
-                  )}
-                </div>
-              </form>
+
+                    {isEditing && (
+                      <button
+                        type="button"
+                        onClick={resetForm}
+                        className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center gap-2"
+                      >
+                        <X size={20} />
+                        Cancel
+                      </button>
+                    )}
+                  </div>
+                </form>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Name *</label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={testimonialFormData.name}
+                      onChange={handleInputChange}
+                      placeholder="Enter client name"
+                      className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Role</label>
+                      <input
+                        type="text"
+                        name="role"
+                        value={testimonialFormData.role}
+                        onChange={handleInputChange}
+                        placeholder="e.g., Product Manager"
+                        className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Company</label>
+                      <input
+                        type="text"
+                        name="company"
+                        value={testimonialFormData.company}
+                        onChange={handleInputChange}
+                        placeholder="Company name"
+                        className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Testimonial Content *</label>
+                    <textarea
+                      name="content"
+                      value={testimonialFormData.content}
+                      onChange={handleInputChange}
+                      placeholder="Enter the testimonial content"
+                      rows="4"
+                      className="w-full bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-vertical"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Rating</label>
+                    <div className="flex items-center gap-4">
+                      <select
+                        name="rating"
+                        value={testimonialFormData.rating}
+                        onChange={handleInputChange}
+                        className="bg-gray-700 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        <option value={5}>5 Stars</option>
+                        <option value={4}>4 Stars</option>
+                        <option value={3}>3 Stars</option>
+                        <option value={2}>2 Stars</option>
+                        <option value={1}>1 Star</option>
+                      </select>
+                      <div className="flex gap-1">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <Star
+                            key={star}
+                            size={20}
+                            className={star <= testimonialFormData.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-400'}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4 pt-4">
+                    <button
+                      type="submit"
+                      disabled={operationLoading}
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                    >
+                      {operationLoading ? (
+                        <>
+                          <Loader size={20} className="animate-spin" />
+                          {isEditing ? 'Updating...' : 'Adding...'}
+                        </>
+                      ) : (
+                        <>
+                          <Save size={20} />
+                          {isEditing ? 'Update Testimonial' : 'Add Testimonial'}
+                        </>
+                      )}
+                    </button>
+
+                    {isEditing && (
+                      <button
+                        type="button"
+                        onClick={resetForm}
+                        className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center gap-2"
+                      >
+                        <X size={20} />
+                        Cancel
+                      </button>
+                    )}
+                  </div>
+                </form>
+              )}
             </div>
 
-            {/* Projects List */}
+            {/* Items List */}
             <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
-              <h2 className="text-xl font-semibold mb-6">Projects ({projects.length})</h2>
+              <h2 className="text-xl font-semibold mb-6">
+                {activeTab === 'projects' ? `Projects (${projects.length})` : `Testimonials (${testimonials.length})`}
+              </h2>
               
               <div className="space-y-4 max-h-96 overflow-y-auto">
-                {projects.length === 0 ? (
-                  <p className="text-gray-400 text-center py-8">No projects yet. Add your first project!</p>
-                ) : (
-                  projects.map((project, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="bg-gray-700 p-4 rounded-lg border border-gray-600"
-                    >
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-semibold text-lg">{project.title}</h3>
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() => handleEdit(index)}
-                            className="text-blue-400 hover:text-blue-300 p-1"
-                          >
-                            <Edit size={16} />
-                          </button>
-                          <button
-                            onClick={() => handleDelete(index)}
-                            className="text-red-400 hover:text-red-300 p-1"
-                          >
-                            <Trash2 size={16} />
-                          </button>
-                        </div>
-                      </div>
-                      
-                      <p className="text-gray-300 text-sm mb-3 line-clamp-2">
-                        {project.description}
-                      </p>
-                      
-                      {project.technologies && project.technologies.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mb-2">
-                          {project.technologies.slice(0, 3).map((tech, techIndex) => (
-                            <span
-                              key={techIndex}
-                              className="bg-blue-600 text-white px-2 py-1 rounded text-xs"
+                {activeTab === 'projects' ? (
+                  projects.length === 0 ? (
+                    <p className="text-gray-400 text-center py-8">No projects yet. Add your first project!</p>
+                  ) : (
+                    projects.map((project, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="bg-gray-700 p-4 rounded-lg border border-gray-600"
+                      >
+                        <div className="flex justify-between items-start mb-2">
+                          <h3 className="font-semibold text-lg">{project.title}</h3>
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => handleEdit(index)}
+                              className="text-blue-400 hover:text-blue-300 p-1"
                             >
-                              {tech}
-                            </span>
-                          ))}
-                          {project.technologies.length > 3 && (
-                            <span className="text-gray-400 text-xs px-2 py-1">
-                              +{project.technologies.length - 3} more
-                            </span>
-                          )}
+                              <Edit size={16} />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(index)}
+                              className="text-red-400 hover:text-red-300 p-1"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
                         </div>
-                      )}
-                      
-                      <div className="flex justify-between items-center text-xs text-gray-400">
-                        <span className={`px-2 py-1 rounded ${
-                          project.onGoing ? 'bg-yellow-600 text-yellow-100' : 'bg-green-600 text-green-100'
-                        }`}>
-                          {project.onGoing ? 'Ongoing' : 'Completed'}
-                        </span>
                         
-                        <div className="flex gap-2">
-                          {project.github && (
-                            <a
-                              href={project.github}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-400 hover:text-blue-300"
-                            >
-                              GitHub
-                            </a>
-                          )}
-                          {project.live && (
-                            <a
-                              href={project.live}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-green-400 hover:text-green-300"
-                            >
-                              Live Demo
-                            </a>
-                          )}
+                        <p className="text-gray-300 text-sm mb-3 line-clamp-2">
+                          {project.description}
+                        </p>
+                        
+                        {project.technologies && project.technologies.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mb-2">
+                            {project.technologies.slice(0, 3).map((tech, techIndex) => (
+                              <span
+                                key={techIndex}
+                                className="bg-blue-600 text-white px-2 py-1 rounded text-xs"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                            {project.technologies.length > 3 && (
+                              <span className="text-gray-400 text-xs px-2 py-1">
+                                +{project.technologies.length - 3} more
+                              </span>
+                            )}
+                          </div>
+                        )}
+                        
+                        <div className="flex justify-between items-center text-xs text-gray-400">
+                          <span className={`px-2 py-1 rounded ${
+                            project.onGoing ? 'bg-yellow-600 text-yellow-100' : 'bg-green-600 text-green-100'
+                          }`}>
+                            {project.onGoing ? 'Ongoing' : 'Completed'}
+                          </span>
+                          
+                          <div className="flex gap-2">
+                            {project.github && (
+                              <a
+                                href={project.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-400 hover:text-blue-300"
+                              >
+                                GitHub
+                              </a>
+                            )}
+                            {project.live && (
+                              <a
+                                href={project.live}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-green-400 hover:text-green-300"
+                              >
+                                Live Demo
+                              </a>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </motion.div>
-                  ))
+                      </motion.div>
+                    ))
+                  )
+                ) : (
+                  testimonials.length === 0 ? (
+                    <p className="text-gray-400 text-center py-8">No testimonials yet. Add your first testimonial!</p>
+                  ) : (
+                    testimonials.map((testimonial, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="bg-gray-700 p-4 rounded-lg border border-gray-600"
+                      >
+                        <div className="flex justify-between items-start mb-2">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
+                              {testimonial.name.split(' ').map(n => n[0]).join('')}
+                            </div>
+                            <div>
+                              <h3 className="font-semibold text-lg">{testimonial.name}</h3>
+                              <p className="text-gray-400 text-sm">
+                                {testimonial.role}{testimonial.company && ` at ${testimonial.company}`}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex gap-2">
+                            <div className="flex gap-1">
+                              {[1, 2, 3, 4, 5].map((star) => (
+                                <Star
+                                  key={star}
+                                  size={14}
+                                  className={star <= testimonial.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-400'}
+                                />
+                              ))}
+                            </div>
+                            <button
+                              onClick={() => handleEdit(index)}
+                              className="text-blue-400 hover:text-blue-300 p-1"
+                            >
+                              <Edit size={16} />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(index)}
+                              className="text-red-400 hover:text-red-300 p-1"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </div>
+                        
+                        <p className="text-gray-300 text-sm line-clamp-3 italic">
+                          &ldquo;{testimonial.content}&rdquo;
+                        </p>
+                      </motion.div>
+                    ))
+                  )
                 )}
               </div>
             </div>
-          </div>
+            </div>
+          </>
         )}
       </div>
     </div>

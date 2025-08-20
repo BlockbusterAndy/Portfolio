@@ -2,9 +2,11 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Star, Quote } from 'lucide-react'
 import PropTypes from 'prop-types'
-import testimonials from '../data/testimonials.json'
+import { useTestimonials } from '../hooks/useTestimonials'
 
 const TestimonialsSection = () => {
+  const { testimonials } = useTestimonials();
+  
   const [headerRef, headerInView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
