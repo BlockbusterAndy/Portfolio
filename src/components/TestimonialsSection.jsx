@@ -16,6 +16,7 @@ const TestimonialsSection = () => {
     triggerOnce: true,
     threshold: 0.1,
   });
+
   const StarRating = ({ rating }) => {
     return (
       <div className="flex gap-1 mb-4">
@@ -107,8 +108,9 @@ const TestimonialsSection = () => {
       >
         <h2 className="text-3xl md:text-4xl font-bold text-primaryText mb-4">
           Client <span className="bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">Testimonials</span>
-        </h2>        <p className="text-secondaryText text-lg max-w-2xl mx-auto">
-          Don&apos;t just take my word for it. Here&apos;s what my clients have to say about working with me.
+        </h2>
+        <p className="text-secondaryText text-lg max-w-2xl mx-auto">
+          Don&apos;t just take my word for it. Here&apos;s what my clients/peers have to say about working with me.
         </p>
       </motion.div>
       
