@@ -1,34 +1,65 @@
-// Default projects data - this will be overridden by localStorage if admin has made changes
 const projects = [
   {
-    title: "Bid Bazaar - An online auction platform",
-    description: "A full-stack web application that allows users to create and participate in online auctions. Built with React, ShadCN UI, TailwindCSS for frontend and Node.js, PostgreSQL, Prisma ORM, SocketIO(for real time communication).",
-    github: "https://github.com",
-    live: "https://bidbazaar.onrender.com",
-    onGoing: true,
-    technologies: ["React", "Node.js", "PostgreSQL", "Socket.IO"]
+    id: "bhn3twv0l4nc862w7ykr8sdz",
+    visible: true,
+    name: "TaskMaster — Collaborative Task Management App",
+    description: "Trello-like board & task tracker",
+    date: "December 2025",
+    summary: "<ul><li><p>Built a <strong>Trello-style task management app</strong> with boards, lists, and cards using <strong>Next.js + React</strong></p></li><li><p>Implemented <strong>real-time collaboration</strong> with shared boards and live task updates using <strong>Firebase</strong></p></li><li><p>Designed a modern, accessible UI with <strong>Shadcn UI</strong>, focusing on productivity and clarity</p></li><li><p>Structured scalable data models for boards, tasks, and collaborators</p></li><li><p>Implemented authentication and role-based access using Firebase</p></li></ul>",
+    keywords: [
+      "Next.js",
+      "React",
+      "Firebase (Auth + DB)",
+      "Shadcn UI"
+    ],
+    github: {
+      href: "https://github.com/BlockbusterAndy/task-tracker"
+    },
+    url: {
+      label: "TaskMaster",
+      href: "https://taskmaster-amber.vercel.app/"
+    }
   },
   {
-    title: "Paskeep - Password Manager",
-    description: "Developed a secure password manager using React and TailwindCSS. Implemented encryption for data security and a user-friendly interface for easy password management.",
-    github: "https://github.com/BlockbusterAndy/PassKeep-Password-Manager-React",
-    live: "https://paskeep.aniketjadhav.com/",
-    onGoing: false,
-    technologies: ["React", "TailwindCSS", "Local Storage", "Encryption"]
+    id: "lty16nb6ls0jt2srjweyf2oo",
+    visible: true,
+    name: "Typesteroid — Typing Web Game",
+    description: "Fast-paced word shooting game",
+    date: "December 2025",
+    summary: "<ul><li><p>Built a <strong>browser-based typing game</strong> where words fall from top to bottom and are destroyed by typing them correctly</p></li><li><p>Implemented <strong>real-time game mechanics</strong> including collision, scoring, and difficulty scaling</p></li><li><p>Used <strong>Kaboom.js</strong> for game logic, animations, and input handling</p></li><li><p>Bundled and optimized the game using <strong>Vite</strong> for fast load times</p></li></ul>",
+    keywords: [
+      "JavaScript",
+      "Kaboom.js",
+      "Vite",
+      "HTML",
+      "CSS"
+    ],
+    github: {
+      href: "https://github.com/BlockbusterAndy/typesteroid"
+    },
+    url: {
+      label: "Typesteroid",
+      href: "https://typesteroid.aniketjadhav.com/"
+    }
   },
   {
-    title: "Portfolio Website",
-    description: "Designed and developed a personal portfolio website to showcase my projects and skills. Utilized React, TailwindCSS, and Framer Motion for a responsive and interactive user experience.",
-    github: "https://github.com/BlockbusterAndy/Portfolio",
-    onGoing: false,
-    technologies: ["React", "TailwindCSS", "Framer Motion", "Vite"]
-  },
-  {
-    title: "TipJar - Donation Platform for creators",
-    description: "Developed a platform for creators to connect with audiences for financial support. Used Next.js for performance and MongoDB Atlas for data management. Focused on user experience and efficient payment processes.",
-    github: "https://github.com/BlockbusterAndy/tip-jar-nextjs",
-    onGoing: false,
-    technologies: ["Next.js", "MongoDB", "Stripe", "Authentication"]
+    id: "qytmcdfd2wn1dj7sh43qfc3y",
+    visible: true,
+    name: "PassKeep",
+    description: "Password Manager",
+    date: "June 2024",
+    summary: "<ul><li><p>Created a React-based application to store passwords securely with encryption protocols.</p></li><li><p>Ensured a seamless user interface using Tailwind CSS.</p></li><li><p>Followed industry best practices for security and frontend development.</p></li><li><p>Tech stack: React, Tailwind CSS.</p></li></ul>",
+    keywords: [
+      "React",
+      "TailwindCSS"
+    ],
+    github: {
+      href: "https://github.com/BlockbusterAndy/PassKeep-Password-Manager-React"
+    },
+    url: {
+      label: "PasKeep",
+      href: "https://paskeep.aniketjadhav.com/"
+    }
   }
 ];
 

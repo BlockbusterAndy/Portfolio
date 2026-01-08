@@ -1,42 +1,13 @@
-import { Linkedin, Github, Download, Mail } from "lucide-react";
-import Aurora from "./ui/Aurora";
-import ErrorBoundary from "./ui/ErrorBoundary";
+import { Linkedin, Github, Download, Mail, ExternalLink } from "lucide-react";
+
+
 import TechPill from "./ui/TechPill";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 
 const Hero = () => {
   const resumeUrl = "https://res.cloudinary.com/dzflqtsc4/image/upload/v1740565464/Aniket_Jadhav_8668443754_ulxzdp.pdf";
-  useEffect(() => {
-    const trackDiv = document.getElementById("trackDiv");
-    if (!trackDiv) return;
 
-    const rect = trackDiv.getBoundingClientRect();
-    let animationId = null;
-
-    const handleMouseMove = (e) => {
-      if (animationId) return; // Throttle updates
-
-      animationId = requestAnimationFrame(() => {
-        let x = e.clientX - rect.left;
-        let y = e.clientY - rect.top;
-        if (trackDiv) {
-          trackDiv.style.setProperty("--mouse-x", `${x}px`);
-          trackDiv.style.setProperty("--mouse-y", `${y}px`);
-        }
-        animationId = null;
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
-    };
-  }, []);
   const downloadResume = () => {
     window.open(resumeUrl, "_blank");
   };
@@ -56,211 +27,173 @@ const Hero = () => {
         block: 'start'
       });
     }
-  }; return (
-    <>
-      <aside className="absolute top-0 left-0 w-full h-[85vh] md:w-full md:h-full -z-10" id="aurora">
-        <ErrorBoundary fallback={<div className="w-full h-full bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 animate-shimmer"></div>}>
-          <Aurora
-            colorStops={["#00D8FF", "#7CFF67", "#00D8FF"]}
-            blend={0.5}
-            amplitude={1.0}
-            speed={0.5}
-          />
-        </ErrorBoundary>
-      </aside>
-      <main className="min-h-[65vh] overflow-hidden relative" id="hero_section" role="main">
+  };
+
+  const fadeInUp = {
+    initial: { opacity: 0, y: 30 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.8, ease: "easeOut" }
+  };
+
+  const staggerContainer = {
+    animate: {
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  return (
+    <section className="relative w-full min-h-[90vh] flex flex-col justify-center overflow-hidden pt-20 pb-10" id="hero_section">
+
+      {/* Background Ambience */}
+      <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-green-500/10 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
+
         {/* Status Badge */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex justify-center mt-6 mb-4"
-          role="status"
-          aria-live="polite"
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="flex justify-center md:justify-start mb-8"
         >
-          <div className="flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/30 rounded-full backdrop-blur-sm">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-gray-400 text-sm font-medium">Available for new opportunities</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 backdrop-blur-sm">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+            </span>
+            <span className="text-green-400 text-xs font-medium tracking-wide">Available for new opportunities</span>
           </div>
         </motion.div>
 
+        <div className="flex flex-col md:flex-row items-center gap-12 lg:gap-20">
+
+          {/* Left Content */}
+          <motion.div
+            className="flex-1 text-center md:text-left"
+            variants={staggerContainer}
+            initial="initial"
+            animate="animate"
+          >
+            <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.1] mb-6">
+              Building <span className="text-secondaryText">digital</span> <br className="hidden md:block" />
+              <span className="bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">experiences</span> that matter.
+            </motion.h1>
+
+            <motion.p variants={fadeInUp} className="text-secondaryText text-lg md:text-xl leading-relaxed max-w-2xl mx-auto md:mx-0 mb-8">
+              Hi, I'm <span className="text-white font-semibold">Aniket Jadhav</span>. A Full-Stack Developer & Designer crafting seamless, user-centric interfaces with modern technologies.
+            </motion.p>
+
+            <motion.div variants={fadeInUp} className="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-10">
+              <button
+                onClick={openWhatsApp}
+                className="px-8 py-3.5 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-all duration-300 transform hover:scale-[1.02] active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.3)] flex items-center gap-2"
+              >
+                Let's Talk
+                <ExternalLink size={18} />
+              </button>
+              <button
+                onClick={downloadResume}
+                className="px-8 py-3.5 bg-transparent border border-white/20 text-white font-semibold rounded-full hover:bg-white/5 transition-all duration-300 flex items-center gap-2"
+              >
+                Resume
+                <Download size={18} />
+              </button>
+            </motion.div>
+
+            {/* Tech Stack Preview */}
+            <motion.div variants={fadeInUp} className="flex flex-col items-center md:items-start gap-4">
+              <span className="text-sm text-secondaryText uppercase tracking-widest font-medium">Tech Stack</span>
+              <div className="flex flex-wrap justify-center md:justify-start gap-2">
+                {["React", "Next.js", "Node.js", "TypeScript", "Tailwind"].map((tech, index) => (
+                  <TechPill key={tech} tech={tech} index={index} />
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Right Visual */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative w-full max-w-md md:max-w-[400px] aspect-square"
+          >
+            {/* Glow effect behind image */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-green-500/20 rounded-full blur-3xl animate-pulse"></div>
+
+            <div className="relative h-full w-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-[#0F0F0F]">
+              <img
+                src="/web_dev.png"
+                alt="Aniket Jadhav"
+                className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
+              />
+
+              {/* Floating Badge 1 */}
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute bottom-6 left-6 bg-black/60 backdrop-blur-md border border-white/10 p-4 rounded-xl flex items-center gap-3 shadow-lg"
+              >
+                <div className="bg-green-500/20 p-2 rounded-lg">
+                  <div className="text-green-400 font-bold text-xl">10+</div>
+                </div>
+                <div>
+                  <div className="text-xs text-secondaryText uppercase font-bold tracking-wider">Projects</div>
+                  <div className="text-white text-sm font-medium">Completed</div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+
+        </div>
+
+        {/* Social Links - Vertical on desktop right side, or absolute bottom */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.5, ease: "easeInOut" }}
-          className="flex flex-col md:flex-row items-center gap-8 hero mx-[6vw] mt-2 md:mt-[3vh] px-[3vw] py-[6vh] relative glassmorphism overflow-hidden"
-          id="glassmorphism"
+          transition={{ delay: 1, duration: 1 }}
+          className="hidden lg:flex flex-col gap-6 absolute right-0 top-1/2 -translate-y-1/2"
         >
-          <div className="hidden md:block" id="trackDiv"></div>          <motion.section
-            initial={{ x: -200, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 1, staggerChildren: 0.2 }}
-            className="w-full rounded-xl md:w-[60%]"
-          >
-            <div className="py-2 border-b-2 border-dashed border-primaryText">
-              <div className="my-2">
-                <h1 className="text-primaryText text-base md:text-2xl text-center md:text-left">
-                  Hello👋, I&apos;m
-                  <span className="text-xl block md:inline md:text-3xl font-medium bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent"> Aniket Jadhav</span>
-                </h1>
-              </div>
-              <div className="my-2">
-                <h2 className="text-primaryText text-2xl text-center md:text-left md:text-3xl font-bold leading-6">
-                  Full-Stack Developer & <span className="hidden md:block"> </span>
-                  <span className="bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">Web Designer</span>
-                </h2>
-              </div>
+          <a href="https://linkedin.com/in/blockbusterandy" target="_blank" rel="noreferrer" className="text-secondaryText hover:text-blue-400 transition-colors p-2"><Linkedin size={24} /></a>
+          <a href="https://github.com/blockbusterandy" target="_blank" rel="noreferrer" className="text-secondaryText hover:text-white transition-colors p-2"><Github size={24} /></a>
+          <a href="mailto:aniketdj19@gmail.com" className="text-secondaryText hover:text-green-400 transition-colors p-2"><Mail size={24} /></a>
+        </motion.div>
 
-              {/* Tech Stack Pills */}              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.6 }}
-                className="flex flex-wrap gap-2 mt-3 justify-center md:justify-start"
-              >
-                {["React", "Node.js", "TypeScript", "Next.js"].map((tech, index) => (
-                  <TechPill key={tech} tech={tech} index={index} />
-                ))}
-              </motion.div>
-            </div>
-
-            <motion.div className="mt-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
-              <p className="text-secondaryText font-semibold text-sm text-center md:text-left md:text-lg tracking-wide leading-5 mb-2">
-                Web enthusiast crafting seamless interfaces and occasionally shaping their design.
-              </p>
-              <p className="text-secondaryText/80 text-xs text-center md:text-left md:text-base">
-                🚀 1+ years of experience building modern web applications<br />
-                🎨 Passionate about creating user-centered digital experiences<br />
-                📍 Based in Pune, India
-              </p>
-            </motion.div>            {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1, duration: 0.6 }}
-              className="flex justify-center md:justify-start gap-6 mt-4 mb-4"
-              role="region"
-              aria-label="Professional statistics"
-            >
-              <div className="text-center">
-                <div className="text-primaryText text-lg font-bold" aria-label="10 plus projects completed">10+</div>
-                <div className="text-secondaryText text-xs">Projects</div>
-              </div>
-              <div className="text-center">
-                <div className="text-primaryText text-lg font-bold" aria-label="2 plus years of experience">1+</div>
-                <div className="text-secondaryText text-xs">Years Exp</div>
-              </div>
-              <div className="text-center">
-                <div className="text-primaryText text-lg font-bold" aria-label="5 plus technologies mastered">5+</div>
-                <div className="text-secondaryText text-xs">Technologies</div>
-              </div>
-            </motion.div><motion.div
-              className="flex flex-col md:flex-row items-center gap-4 mt-4"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1 }}
-            >
-              <div className="flex items-center gap-2" role="navigation" aria-label="Social media links">
-                <a
-                  href="https://linkedin.com/in/blockbusterandy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Visit my LinkedIn profile"
-                  className="focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
-                >
-                  <Linkedin size={28} color="#A3A3A3" className="hover-icon" />
-                </a>
-                <a
-                  href="https://github.com/blockbusterandy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Visit my GitHub profile"
-                  className="focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
-                >
-                  <Github size={28} color="#A3A3A3" className="hover-icon" />
-                </a>
-                <a
-                  href="mailto:aniketdj19@gmail.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Send me an email"
-                  className="focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
-                >
-                  <Mail size={28} color="#A3A3A3" className="hover-icon" />
-                </a>
-              </div>
-              <div className="flex gap-3">
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  className="px-4 py-1.5 border-2 border-dashed border-primaryText text-primaryText flex gap-2 items-center rounded-full font-semibold cursor-pointer hover-glow focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  onClick={downloadResume}
-                  aria-label="Download my resume PDF"
-                >
-                  <Download size={20} />
-                  <span className="text-base">Resume</span>
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  className="px-4 py-1.5 bg-primaryText text-primaryBg flex gap-2 items-center rounded-full font-semibold cursor-pointer transition-all duration-300 hover:bg-primaryText/90 focus:outline-none focus:ring-2 focus:ring-green-400"
-                  onClick={openWhatsApp}
-                  aria-label="Contact me on WhatsApp"
-                >
-                  <span className="text-base">Let&apos;s Talk</span>
-                </motion.button>
-              </div>
-            </motion.div>
-          </motion.section>          <motion.section
-            initial={{ x: 200, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 1 }}
-            className="relative md:w-[40%] flex justify-center"
-          >
-            {/* Decorative Elements */}
-            <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-blue-400/20 to-green-400/20 rounded-full blur-xl"></div>
-            <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-br from-green-400/20 to-blue-400/20 rounded-full blur-xl"></div>
-
-            {/* Image Container */}
-            <div className="relative overflow-hidden rounded-2xl border-2 border-primaryText/20 p-1 bg-gradient-to-br from-blue-400/10 to-green-400/10 backdrop-blur-sm md:w-[350px] md:h-[350px]">
-              <img
-                src="/web_dev.png"
-                alt="Aniket Jadhav - Full Stack Developer"
-                className="w-full h-full rounded-xl object-cover transform hover:scale-105 transition-transform duration-500"
-                loading="lazy"
-              />
-            </div>
-
-            {/* Background Pattern */}
-            <div className="absolute inset-0 -z-10">
-              <div className="absolute top-8 left-8 w-2 h-2 bg-blue-400 rounded-full opacity-60"></div>
-              <div className="absolute top-16 right-12 w-1 h-1 bg-green-400 rounded-full opacity-60"></div>
-              <div className="absolute bottom-20 left-4 w-1.5 h-1.5 bg-blue-400 rounded-full opacity-60"></div>
-              <div className="absolute bottom-8 right-8 w-2 h-2 bg-green-400 rounded-full opacity-60"></div>
-            </div>
-          </motion.section>        </motion.div>
-        {/* Scroll Indicator */}
+        {/* Mobile Socials */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.8 }}
-          className="flex justify-center mt-8 mb-4"
+          transition={{ delay: 0.8 }}
+          className="flex lg:hidden justify-center gap-8 mt-12 text-secondaryText"
         >
-          <button
-            className="flex flex-col items-center gap-2 cursor-pointer group focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-lg p-2"
-            onClick={() => scrollToSection('aboutMeSection')}
-            aria-label="Scroll down to about section"
-          >
-            <span className="text-secondaryText text-xs group-hover:text-primaryText transition-colors">Scroll to explore</span>
-            <div className="w-6 h-10 border-2 border-primaryText/40 rounded-full flex justify-center group-hover:border-primaryText transition-colors">
-              <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                className="w-1 h-2 bg-primaryText rounded-full mt-2"
-                aria-hidden="true"
-              ></motion.div>
-            </div>
-          </button>
+          <a href="https://linkedin.com/in/blockbusterandy" target="_blank" rel="noreferrer" className="hover:text-blue-400 transition-colors"><Linkedin size={24} /></a>
+          <a href="https://github.com/blockbusterandy" target="_blank" rel="noreferrer" className="hover:text-white transition-colors"><Github size={24} /></a>
+          <a href="mailto:aniketdj19@gmail.com" className="hover:text-green-400 transition-colors p-2"><Mail size={24} /></a>
         </motion.div>
-      </main>
-    </>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 1 }}
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 cursor-pointer"
+          onClick={() => scrollToSection('aboutMeSection')}
+        >
+          <span className="text-[10px] text-secondaryText tracking-[0.2em] uppercase">Scroll</span>
+          <div className="w-[1px] h-12 bg-gradient-to-b from-secondaryText/0 via-secondaryText/50 to-secondaryText/0 relative overflow-hidden">
+            <motion.div
+              animate={{ y: [-15, 45] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+              className="w-full h-1/3 bg-white blur-[1px]"
+            />
+          </div>
+        </motion.div>
+
+      </div>
+    </section>
   );
 };
 

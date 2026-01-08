@@ -34,7 +34,7 @@ const Button = ({ link, icon, text }) => {
         {icon}
         <h4 className="text-sm sm:text-lg text-primaryText dark:text-primaryText light:text-gray-800">{text}</h4>
       </button>
-    </motion.a>  );
+    </motion.a>);
 };
 
 Button.propTypes = {
@@ -43,9 +43,9 @@ Button.propTypes = {
   text: PropTypes.string.isRequired,
 };
 
-const ProjectCard = ({ title, description, onGoing, github, live, technologies }) => {
+const ProjectCard = ({ title, description, summary, onGoing, github, live, technologies }) => {
   return (
-    <motion.div 
+    <motion.div
       className="flex flex-col p-4 sm:p-6 border-2 border-dashed border-primaryText rounded-xl overflow-hidden w-full group"
       whileHover={{ scale: 1.02, y: -5 }}
       transition={{ duration: 0.3 }}
@@ -54,13 +54,21 @@ const ProjectCard = ({ title, description, onGoing, github, live, technologies }
         <h4 className="text-lg sm:text-xl font-semibold text-primaryText group-hover:text-blue-400 transition-colors">
           {title}
         </h4>
-        <p className="text-sm sm:text-base text-secondaryText mb-3">{description}</p>
-        
+        <p className="text-sm sm:text-base text-secondaryText mb-2 font-medium">{description}</p>
+
+        {/* Project Summary */}
+        {summary && (
+          <div
+            className="text-sm text-secondaryText mb-4 [&>ul]:list-disc [&>ul]:pl-5 [&>ul>li]:mb-1 [&>ul>li>p]:inline"
+            dangerouslySetInnerHTML={{ __html: summary }}
+          />
+        )}
+
         {/* Technologies */}
         {technologies && (
           <div className="flex flex-wrap gap-1.5 mb-3">
             {technologies.map((tech, index) => (
-              <span 
+              <span
                 key={index}
                 className="px-2 py-1 text-xs bg-blue-400/10 border border-blue-400/20 rounded-md text-blue-400"
               >
@@ -69,8 +77,8 @@ const ProjectCard = ({ title, description, onGoing, github, live, technologies }
             ))}
           </div>
         )}
-        
-        {onGoing ? <InComplete /> : <Completed />}
+
+        {onGoing !== undefined && (onGoing ? <InComplete /> : <Completed />)}
       </div>
       <div className="flex flex-col sm:flex-row justify-center sm:justify-end gap-4 md:gap-6 mt-3 pr-1 sm:pr-4">
         {github && <Button icon={<Github size={24} color="#A3A3A3" />} text="Github" link={github} />}
@@ -83,6 +91,7 @@ const ProjectCard = ({ title, description, onGoing, github, live, technologies }
 ProjectCard.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  summary: PropTypes.string,
   onGoing: PropTypes.bool,
   github: PropTypes.string,
   live: PropTypes.string,
