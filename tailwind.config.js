@@ -31,7 +31,7 @@ export default {
         '2xl': ['1.2rem', { lineHeight: '1.5rem' }],
         '3xl': ['1.5rem', { lineHeight: '1.8rem' }],
         '4xl': ['1.8rem', { lineHeight: '2.1rem' }],
-        '5xl': ['2.4rem', { lineHeight: '2.7rem' }],        '6xl': ['3rem', { lineHeight: '3.3rem' }],
+        '5xl': ['2.4rem', { lineHeight: '2.7rem' }], '6xl': ['3rem', { lineHeight: '3.3rem' }],
       },
       animation: {
         shimmer: 'shimmer 3s ease-in-out infinite',
@@ -44,7 +44,7 @@ export default {
         },
       },
     },
-    colors:{
+    colors: {
       primaryBg: '#0A0A0A',
       cardBg: '#121212',
       primaryText: '#F5F5F5',

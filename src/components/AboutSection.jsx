@@ -76,7 +76,7 @@ const AboutSection = () => {
                     className='border-b-2 border-dashed border-primaryText pb-4 mb-6'
                     id='aboutHeader'
                 >
-                    <h3 className='text-primaryText text-3xl font font-semibold'>My Story</h3>                </motion.div>                <div className="flex flex-col md:flex-row gap-3 w-full">                        
+                    <h3 className='text-primaryText text-3xl font font-semibold'>My Story</h3>                </motion.div>                <div className="flex flex-col md:flex-row gap-3 w-full">
                     <motion.div
                         ref={aboutRef}
                         initial={{ opacity: 0, x: -50 }}
@@ -175,7 +175,7 @@ const AboutSection = () => {
                                 </div>
                             </div>
                         </div>
-                    </motion.div>                
+                    </motion.div>
                 </div>
 
                 {/* Tech Stack Section */}

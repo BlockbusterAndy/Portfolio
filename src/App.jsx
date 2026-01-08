@@ -12,7 +12,7 @@ import LoadingScreen from "./components/ui/LoadingScreen"
 import PerformanceMonitor from "./components/ui/PerformanceMonitor"
 import DevTools from "./components/ui/DevTools"
 import ScrollToTop from "./components/ui/ScrollToTop"
-import AdminPanel from "./components/AdminPanel"
+
 
 // Main Portfolio Page Component
 const PortfolioPage = () => {
@@ -45,7 +45,7 @@ const PortfolioPage = () => {
           <LoadingScreen onLoadingComplete={handleLoadingComplete} />
         )}
       </AnimatePresence>
-      
+
       {!isLoading && (
         <>          <Navbar />
           <Hero />
@@ -66,7 +66,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<PortfolioPage />} />
-        <Route path="/admin" element={<AdminPanel />} />
+
       </Routes>
     </Router>
   )

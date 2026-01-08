@@ -10,13 +10,13 @@ const Hero = () => {
   useEffect(() => {
     const trackDiv = document.getElementById("trackDiv");
     if (!trackDiv) return;
-    
+
     const rect = trackDiv.getBoundingClientRect();
     let animationId = null;
-  
+
     const handleMouseMove = (e) => {
       if (animationId) return; // Throttle updates
-      
+
       animationId = requestAnimationFrame(() => {
         let x = e.clientX - rect.left;
         let y = e.clientY - rect.top;
@@ -27,9 +27,9 @@ const Hero = () => {
         animationId = null;
       });
     };
-  
+
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
-  
+
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       if (animationId) {
@@ -51,26 +51,26 @@ const Hero = () => {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ 
+      element.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
     }
-  };  return (
+  }; return (
     <>
-    <aside className="absolute top-0 left-0 w-full h-[85vh] md:w-full md:h-full -z-10" id="aurora">
-      <ErrorBoundary fallback={<div className="w-full h-full bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 animate-shimmer"></div>}>
-        <Aurora
+      <aside className="absolute top-0 left-0 w-full h-[85vh] md:w-full md:h-full -z-10" id="aurora">
+        <ErrorBoundary fallback={<div className="w-full h-full bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 animate-shimmer"></div>}>
+          <Aurora
             colorStops={["#00D8FF", "#7CFF67", "#00D8FF"]}
             blend={0.5}
             amplitude={1.0}
             speed={0.5}
-        />
-      </ErrorBoundary>
-    </aside>
+          />
+        </ErrorBoundary>
+      </aside>
       <main className="min-h-[65vh] overflow-hidden relative" id="hero_section" role="main">
         {/* Status Badge */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -110,8 +110,8 @@ const Hero = () => {
                   <span className="bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">Web Designer</span>
                 </h2>
               </div>
-              
-              {/* Tech Stack Pills */}              <motion.div 
+
+              {/* Tech Stack Pills */}              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.6 }}
@@ -128,8 +128,8 @@ const Hero = () => {
                 Web enthusiast crafting seamless interfaces and occasionally shaping their design.
               </p>
               <p className="text-secondaryText/80 text-xs text-center md:text-left md:text-base">
-                🚀 1+ years of experience building modern web applications<br/>
-                🎨 Passionate about creating user-centered digital experiences<br/>
+                🚀 1+ years of experience building modern web applications<br />
+                🎨 Passionate about creating user-centered digital experiences<br />
                 📍 Based in Pune, India
               </p>
             </motion.div>            {/* Stats */}
@@ -160,27 +160,27 @@ const Hero = () => {
               transition={{ duration: 1 }}
             >
               <div className="flex items-center gap-2" role="navigation" aria-label="Social media links">
-                <a 
-                  href="https://linkedin.com/in/blockbusterandy" 
-                  target="_blank" 
+                <a
+                  href="https://linkedin.com/in/blockbusterandy"
+                  target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Visit my LinkedIn profile"
                   className="focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
                 >
                   <Linkedin size={28} color="#A3A3A3" className="hover-icon" />
                 </a>
-                <a 
-                  href="https://github.com/blockbusterandy" 
-                  target="_blank" 
+                <a
+                  href="https://github.com/blockbusterandy"
+                  target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Visit my GitHub profile"
                   className="focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
                 >
                   <Github size={28} color="#A3A3A3" className="hover-icon" />
                 </a>
-                <a 
-                  href="mailto:aniketdj19@gmail.com" 
-                  target="_blank" 
+                <a
+                  href="mailto:aniketdj19@gmail.com"
+                  target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Send me an email"
                   className="focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
@@ -188,7 +188,7 @@ const Hero = () => {
                   <Mail size={28} color="#A3A3A3" className="hover-icon" />
                 </a>
               </div>
-                <div className="flex gap-3">
+              <div className="flex gap-3">
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   className="px-4 py-1.5 border-2 border-dashed border-primaryText text-primaryText flex gap-2 items-center rounded-full font-semibold cursor-pointer hover-glow focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -217,7 +217,7 @@ const Hero = () => {
             {/* Decorative Elements */}
             <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-blue-400/20 to-green-400/20 rounded-full blur-xl"></div>
             <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-br from-green-400/20 to-blue-400/20 rounded-full blur-xl"></div>
-            
+
             {/* Image Container */}
             <div className="relative overflow-hidden rounded-2xl border-2 border-primaryText/20 p-1 bg-gradient-to-br from-blue-400/10 to-green-400/10 backdrop-blur-sm md:w-[350px] md:h-[350px]">
               <img
@@ -227,7 +227,7 @@ const Hero = () => {
                 loading="lazy"
               />
             </div>
-            
+
             {/* Background Pattern */}
             <div className="absolute inset-0 -z-10">
               <div className="absolute top-8 left-8 w-2 h-2 bg-blue-400 rounded-full opacity-60"></div>
@@ -236,15 +236,15 @@ const Hero = () => {
               <div className="absolute bottom-8 right-8 w-2 h-2 bg-green-400 rounded-full opacity-60"></div>
             </div>
           </motion.section>        </motion.div>
-          {/* Scroll Indicator */}
+        {/* Scroll Indicator */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.8 }}
           className="flex justify-center mt-8 mb-4"
         >
-          <button 
-            className="flex flex-col items-center gap-2 cursor-pointer group focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-lg p-2" 
+          <button
+            className="flex flex-col items-center gap-2 cursor-pointer group focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-lg p-2"
             onClick={() => scrollToSection('aboutMeSection')}
             aria-label="Scroll down to about section"
           >
