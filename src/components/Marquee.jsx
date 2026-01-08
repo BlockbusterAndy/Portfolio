@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { Star } from "lucide-react";
 
 const Marquee = () => {
   const marqueeRef = useRef(null);
@@ -7,30 +8,45 @@ const Marquee = () => {
   useEffect(() => {
     const marqueeElement = marqueeRef.current;
 
-    // Duplicate the content for seamless scrolling
-    const marqueeItems = marqueeElement.querySelectorAll(".marquee-item");
-    marqueeElement.innerHTML += marqueeElement.innerHTML;
+    // Create a timeline for infinite scroll
+    const tl = gsap.timeline({ repeat: -1 });
 
-    // GSAP Animation
-    gsap.to(marqueeElement, {
-      xPercent: -50, // Move 50% of the width
+    // We need to move by 50% because we duplicated the content
+    tl.to(marqueeElement, {
+      xPercent: -50,
       ease: "none",
-      duration: 10,
-      repeat: -1,
+      duration: 25, // Time to scroll through half the width
     });
+
+    return () => {
+      tl.kill();
+    };
   }, []);
 
-  return (    <div className="overflow-hidden relative w-full bg-black py-3 border-t-2 border-b-2 border-dashed border-primaryText" id="marquee">
-      <div
-        ref={marqueeRef}
-        className="flex whitespace-nowrap text-white text-lg md:text-3xl font-bold tracking-wide text-primaryText"
-      >
-        <span className="marquee-item mx-4">PROJECTS</span>
-        <span className="marquee-item mx-4">PROJECTS</span>
-        <span className="marquee-item mx-4">PROJECTS</span>
-        <span className="marquee-item mx-4">PROJECTS</span>
-        <span className="marquee-item mx-4">PROJECTS</span>
-        <span className="marquee-item mx-4">PROJECTS</span>
+  // Items to display
+  const items = ["FULL STACK DEVELOPMENT", "UI/UX DESIGN", "DATABASE ARCHITECTURE", "API INTEGRATION", "PERFORMANCE OPTIMIZATION"];
+
+  // Flattening duplication logic for safety
+  const displayItems = [...items, ...items, ...items, ...items];
+
+  return (
+    <div className="w-full bg-[#0F0F0F] py-8 overflow-hidden border-y border-white/5 relative z-10" id="marquee">
+      <div className="relative flex whitespace-nowrap overflow-hidden">
+        {/* Wrapper for double content to seamless loop */}
+        <div ref={marqueeRef} className="flex gap-12 items-center min-w-full pl-6">
+          {displayItems.map((item, index) => (
+            <div key={index} className="flex items-center gap-12 shrink-0">
+              <span className="text-2xl md:text-3xl font-black text-white/20 tracking-tighter hover:text-white/40 transition-colors uppercase select-none">
+                {item}
+              </span>
+              <Star size={16} className="text-blue-500/40 fill-blue-500/40" />
+            </div>
+          ))}
+        </div>
+
+        {/* Side fades for smoothness */}
+        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#0F0F0F] to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#0F0F0F] to-transparent z-10 pointer-events-none"></div>
       </div>
     </div>
   );

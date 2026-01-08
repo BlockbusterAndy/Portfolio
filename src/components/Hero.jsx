@@ -132,7 +132,7 @@ const Hero = () => {
               />
 
               {/* Floating Badge 1 */}
-              <motion.div
+              {/* <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute bottom-6 left-6 bg-black/60 backdrop-blur-md border border-white/10 p-4 rounded-xl flex items-center gap-3 shadow-lg"
@@ -144,7 +144,7 @@ const Hero = () => {
                   <div className="text-xs text-secondaryText uppercase font-bold tracking-wider">Projects</div>
                   <div className="text-white text-sm font-medium">Completed</div>
                 </div>
-              </motion.div>
+              </motion.div> */}
             </div>
           </motion.div>
 

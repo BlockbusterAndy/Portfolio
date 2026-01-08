@@ -1,11 +1,9 @@
-import { CodeXml, DraftingCompass, Gamepad2, GraduationCap } from 'lucide-react'
+import { CodeXml, DraftingCompass, Gamepad2, GraduationCap, Briefcase } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
 import IconCard from './IconCard'
 import SkillBar from './ui/SkillBar'
 
 const AboutSection = () => {
-
     const techStack = {
         frameworksLibraries: [
             { name: "React", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
@@ -39,214 +37,191 @@ const AboutSection = () => {
         ]
     };
 
-    const [headerRef, headerInView] = useInView({
-        triggerOnce: true,
-        threshold: 0.1,
-    });
+    const sectionVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+    };
 
-    const [aboutRef, aboutInView] = useInView({
-        triggerOnce: true,
-        threshold: 0.1,
-    });
+    const containerVariants = {
+        visible: {
+            transition: {
+                staggerChildren: 0.1
+            }
+        }
+    };
 
-    const [educationRef, educationInView] = useInView({
-        triggerOnce: true,
-        threshold: 0.1,
-    });
-
-    const [skillsHeadingRef, skillsHeadingInView] = useInView({
-        triggerOnce: true,
-        threshold: 0.1,
-    });
-
-    const [skillsRef, skillsInView] = useInView({
-        triggerOnce: true,
-        threshold: 0.1,
-    });
+    const itemVariants = {
+        hidden: { opacity: 0, scale: 0.95 },
+        visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } }
+    };
 
     return (
-        <>            <section className='mb-4' id='aboutMeSection'>
-            <div className='mx-[6vw] my-[6vh] md:mt-[10vh]'>
+        <section className='relative w-full py-20 px-6 md:px-12 overflow-hidden' id='aboutMeSection'>
 
+            {/* Background Elements */}
+            <div className="absolute top-1/4 left-0 w-[300px] h-[300px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-1/4 right-0 w-[300px] h-[300px] bg-purple-500/5 rounded-full blur-[100px] pointer-events-none" />
+
+            <div className='max-w-7xl mx-auto'>
                 <motion.div
-                    ref={headerRef}
-                    initial={{ opacity: 0, y: -50 }}
-                    animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -50 }}
-                    transition={{ duration: 0.6 }}
-                    className='border-b-2 border-dashed border-primaryText pb-4 mb-6'
-                    id='aboutHeader'
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    variants={sectionVariants}
+                    className='mb-16'
                 >
-                    <h3 className='text-primaryText text-3xl font font-semibold'>My Story</h3>                </motion.div>                <div className="flex flex-col md:flex-row gap-3 w-full">
-                    <motion.div
-                        ref={aboutRef}
-                        initial={{ opacity: 0, x: -50 }}
-                        animate={aboutInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-                        transition={{ duration: 0.6 }}
-                        className="flex flex-col gap-6 md:w-[60%] md:mr-16"
-                        id='about'
-                    >
-                        <div className='text-secondaryText flex flex-col gap-1.5'>
-                            <h4 className='text-xl font-semibold flex items-center gap-2' id='development'><CodeXml size={18} />Development</h4>
-                            <p className='text-base'>I enjoy crafting user-friendly web applications. My expertise includes the <strong>MERN stack</strong>, <strong>Next.js</strong>, and <strong>TailwindCSS</strong>, allowing me to deliver efficient solutions. I believe in continuous learning to stay updated with tech trends.</p>
-                        </div>
-                        <div className='text-secondaryText flex flex-col gap-1.5'>
-                            <h4 className='text-xl font-semibold flex items-center gap-2' id='design'><DraftingCompass size={18} />Design</h4>
-                            <p className='text-base'>With a creative mindset in <strong>UI/UX</strong>, I bridge design and development. Using <strong>Figma</strong>, I create engaging prototypes that meet user needs, combining simplicity and elegance for intuitive experiences.</p>
-                        </div>
-                        <div className='text-secondaryText flex flex-col gap-1.5'>
-                            <h4 className='text-xl font-semibold flex items-center gap-2' id='hobbies'><Gamepad2 size={18} />Beyond The Screen</h4>
-                            <p className='text-base'>When not coding or designing, I enjoy <strong>music</strong>, <strong>movies</strong>, <strong>hiking</strong>, and <strong>gaming</strong>. virtual landscapes or <strong>exploring nature</strong> inspires and relaxes me.</p>
-                        </div>
-                        {/* Skills Progress */}
-                        <div>
-                            <h4 className='text-secondaryText text-xl font-bold mb-4'>Skill Proficiency</h4>
-                            <SkillBar skill="JavaScript/TypeScript" percentage={90} delay={0.2} />
-                            <SkillBar skill="React & Next.js" percentage={85} delay={0.4} />
-                            <SkillBar skill="Node.js & Express" percentage={80} delay={0.6} />
-                            <SkillBar skill="Database Design" percentage={70} delay={1.0} />
-                            <SkillBar skill="UI/UX Design" percentage={70} delay={0.8} />
-                        </div>
-                    </motion.div>                    <motion.div
-                        ref={educationRef}
-                        initial={{ opacity: 0, x: 50 }}
-                        animate={educationInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-                        transition={{ duration: 0.6 }}
-                        className="mt-8 md:mt-0 md:w-[40%]"
-                        id='timelineSection'
-                    >
-                        <h4 className='text-secondaryText text-xl font-bold flex items-center gap-2 mb-3'>
-                            <GraduationCap size={22} className='-rotate-12' />Timeline                        </h4>
+                    <h3 className='text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight'>
+                        About <span className="bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">Me</span>
+                    </h3>
+                    <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-green-400 rounded-full mb-8"></div>
 
-                        <div className="relative px-3 text-secondaryText" id='timelineDiv'>
-                            {/* Center vertical line */}
-                            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-secondary border border-opacity-20 border-secondary"></div>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+                        {/* Left Column: Bio & Interests */}
+                        <div className="space-y-8">
+                            <div className='prose prose-lg prose-invert text-secondaryText'>
+                                <p className="leading-relaxed">
+                                    I'm a passionate full-stack developer who bridges the gap between functional code and beautiful design.
+                                    With a strong foundation in the MERN stack and a keen eye for UI/UX, I build digital products that look good and work seamlessly.
+                                </p>
+                            </div>
 
-                            {/* Education Timeline Items */}
-                            <div className="space-y-4">
-                                {/* BBA Education - Left Side */}
-                                <div className="flex items-center">
-                                    <div className="w-1/2 pr-4 text-left">
-                                        <div className="p-4">
-                                            <p className="text-lg font-semibold">Shri Shahu Mandir Mahavidyalaya, Pune</p>
-                                            <p className="text-base text-gray-500">Bachelors of Business Administration (BBA)</p>
-                                            <p className="text-sm text-gray-500">Major - Financial Management</p>
-                                            <p className="text-sm text-gray-500">Sep 2020 - Aug 2023</p>
-                                            <p className="text-sm text-gray-500">CGPA - 8.54</p>
-                                        </div>
-                                    </div>
-                                    <div className="relative z-10">
-                                        <div className="w-4 h-4 bg-primaryText rounded-full border-4 border-background"></div>
-                                    </div>
-                                    <div className="w-1/2 pl-8"></div>
-                                </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <motion.div
+                                    className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-blue-400/30 transition-colors duration-300"
+                                    whileHover={{ y: -5 }}
+                                >
+                                    <h4 className='text-xl font-semibold text-white mb-3 flex items-center gap-2'>
+                                        <CodeXml size={20} className="text-blue-400" /> Development
+                                    </h4>
+                                    <p className='text-sm text-secondaryText leading-relaxed'>
+                                        Building scalable web apps with <strong>MERN stack</strong>, <strong>Next.js</strong>, and modern CSS frameworks.
+                                    </p>
+                                </motion.div>
 
-                                {/* MCA Education - Left Side */}
-                                <div className="flex items-center">
-                                    <div className="w-1/2 pr-4 text-left">
-                                        <div className="p-4">
-                                            <p className="text-lg font-semibold">Sinhgad Institutes of Management, Pune</p>
-                                            <p className="text-base text-gray-500">Masters of Computer Applications (MCA)</p>
-                                            <p className="text-sm text-gray-500">Aug 2023 - Jun 2025</p>
-                                            <p className="text-sm text-gray-500">Graduated with</p>
-                                            <p className="text-sm text-gray-500">CGPA - 8.10</p>
-                                        </div>
-                                    </div>
-                                    <div className="relative z-10">
-                                        <div className="w-4 h-4 bg-primaryText rounded-full border-4 border-background"></div>
-                                    </div>
-                                    <div className="w-1/2 pl-8"></div>
-                                </div>
+                                <motion.div
+                                    className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-green-400/30 transition-colors duration-300"
+                                    whileHover={{ y: -5 }}
+                                >
+                                    <h4 className='text-xl font-semibold text-white mb-3 flex items-center gap-2'>
+                                        <DraftingCompass size={20} className="text-green-400" /> Design
+                                    </h4>
+                                    <p className='text-sm text-secondaryText leading-relaxed'>
+                                        Crafting intuitive UI/UX with <strong>Figma</strong>. I believe simplicity is the ultimate sophistication.
+                                    </p>
+                                </motion.div>
+                            </div>
 
-                                {/* Work Experience - Right Side */}
-                                <div className="flex items-center">
-                                    <div className="w-1/2 pr-4"></div>
-                                    <div className="relative z-10">
-                                        <div className="w-4 h-4 bg-primaryText rounded-full border-4 border-background animate-pulse"></div>
-                                        <div className="absolute inset-0 w-4 h-4 bg-primaryText rounded-full animate-ping opacity-30"></div>
-                                    </div>
-                                    <div className="w-1/2 pl-4">
-                                        <div className="p-4">
-                                            <p className="text-lg font-semibold">Muncho Technologies Pvt. Ltd.</p>
-                                            <p className="text-base text-gray-500">Full-Stack Developer Intern</p>
-                                            <p className="text-sm text-gray-500">Feb 2023 - Present</p>
-                                            <p className="text-sm text-gray-500 mt-2">Currently working on modern web applications using React, Node.js, and other cutting-edge technologies.</p>
-                                        </div>
-                                    </div>
+                            {/* Skill Bars */}
+                            <div className="mt-8">
+                                <h4 className='text-white text-lg font-semibold mb-6'>Core Competencies</h4>
+                                <div className="space-y-4">
+                                    <SkillBar skill="JavaScript/TypeScript" percentage={90} delay={0.2} />
+                                    <SkillBar skill="React & Next.js" percentage={85} delay={0.4} />
+                                    <SkillBar skill="Node.js & Express" percentage={80} delay={0.6} />
+                                    <SkillBar skill="Database Design" percentage={70} delay={0.8} />
                                 </div>
                             </div>
+
+                        </div>
+
+                        {/* Right Column: Timeline & Education */}
+                        <div className="relative pl-0 lg:pl-10">
+                            <h4 className='text-2xl font-bold text-white mb-8 flex items-center gap-3'>
+                                <Briefcase size={24} className="text-white" /> Experience & Education
+                            </h4>
+
+                            {/* Modern Timeline */}
+                            <div className="relative border-l-2 border-white/10 ml-3 space-y-10 pl-8 pb-4">
+
+                                {/* Current Role */}
+                                <div className="relative">
+                                    <div className="absolute -left-[41px] top-0 w-5 h-5 bg-blue-500 rounded-full border-4 border-[#0A0A0A] shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+                                    <div className="mb-2">
+                                        <span className="text-xs font-mono text-blue-400 px-2 py-1 bg-blue-500/10 rounded">Nov 2025 - Present</span>
+                                    </div>
+                                    <h5 className="text-xl font-bold text-white">Full-Stack Developer</h5>
+                                    <p className="text-secondaryText text-sm mb-2">Muncho Technologies Pvt. Ltd.</p>
+                                    <p className="text-secondaryText text-sm leading-relaxed max-w-md">
+                                        Spearheading the development of modern web applications, optimizing performance, and mentoring junior developers.
+                                    </p>
+                                </div>
+
+                                {/* Internship Role */}
+                                <div className="relative">
+                                    <div className="absolute -left-[41px] top-0 w-5 h-5 bg-blue-500 rounded-full border-4 border-[#0A0A0A] shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+                                    <div className="mb-2">
+                                        <span className="text-xs font-mono text-blue-400 px-2 py-1 bg-blue-500/10 rounded">March 2025 - Oct 2025</span>
+                                    </div>
+                                    <h5 className="text-xl font-bold text-white">Full-Stack Developer Intern</h5>
+                                    <p className="text-secondaryText text-sm mb-2">Muncho Technologies Pvt. Ltd.</p>
+                                    <p className="text-secondaryText text-sm leading-relaxed max-w-md">
+                                        Gained hands-on experience in MERN stack development, contributing to key features and learning scalable backend solutions.
+                                    </p>
+                                </div>
+
+                                {/* Item 2 */}
+                                <div className="relative">
+                                    <div className="absolute -left-[41px] top-0 w-5 h-5 bg-green-500 rounded-full border-4 border-[#0A0A0A] shadow-[0_0_10px_rgba(34,197,94,0.5)]"></div>
+                                    <div className="mb-2">
+                                        <span className="text-xs font-mono text-green-400 px-2 py-1 bg-green-500/10 rounded">2023 - 2025</span>
+                                    </div>
+                                    <h5 className="text-xl font-bold text-white">Masters of Computer Applications (MCA)</h5>
+                                    <p className="text-secondaryText text-sm mb-2">Sinhgad Institutes of Management, Pune</p>
+                                    <p className="text-secondaryText text-sm">Graduated with CGPA: <strong>8.10</strong></p>
+                                </div>
+
+                                {/* Item 3 */}
+                                <div className="relative">
+                                    <div className="absolute -left-[41px] top-0 w-5 h-5 bg-purple-500 rounded-full border-4 border-[#0A0A0A] shadow-[0_0_10px_rgba(168,85,247,0.5)]"></div>
+                                    <div className="mb-2">
+                                        <span className="text-xs font-mono text-purple-400 px-2 py-1 bg-purple-500/10 rounded">2020 - 2023</span>
+                                    </div>
+                                    <h5 className="text-xl font-bold text-white">Bachelors of Business Administration (BBA)</h5>
+                                    <p className="text-secondaryText text-sm mb-2">Shri Shahu Mandir Mahavidyalaya, Pune</p>
+                                    <p className="text-secondaryText text-sm">Major in Financial Management. CGPA: <strong>8.54</strong></p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {/* Tech Stack Grid */}
+                    <motion.div
+                        variants={containerVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-50px" }}
+                        className='mt-24'
+                    >
+                        <h4 className='text-3xl font-bold text-white mb-10 text-center'>Technologies I Use</h4>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {[
+                                { title: "Frontend & Frameworks", icons: techStack.frameworksLibraries },
+                                { title: "Languages", icons: techStack.programmingLanguages },
+                                { title: "Tools", icons: techStack.tools },
+                                { title: "Databases", icons: techStack.database },
+                            ].map((category, idx) => (
+                                <motion.div
+                                    key={idx}
+                                    variants={itemVariants}
+                                    className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-300"
+                                >
+                                    <h5 className="text-white font-semibold mb-4 border-b border-white/10 pb-2">{category.title}</h5>
+                                    <div className="flex flex-wrap gap-3">
+                                        {category.icons.map((icon, iconIdx) => (
+                                            <IconCard key={iconIdx} url={icon.url} name={icon.name} />
+                                        ))}
+                                    </div>
+                                </motion.div>
+                            ))}
                         </div>
                     </motion.div>
-                </div>
 
-                {/* Tech Stack Section */}
-                <div className='mt-12 w-full'>
-                    <motion.h4
-                        ref={skillsHeadingRef}
-                        initial={{ opacity: 0, y: -50 }}
-                        animate={skillsHeadingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -50 }}
-                        transition={{ duration: 0.6 }}
-                        className='text-2xl text-primaryText font-semibold mb-8'
-                        id="skillsHeading"
-                    >
-                        What I Work With
-                    </motion.h4>
-
-                    <motion.div
-                        ref={skillsRef}
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={skillsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                        transition={{ duration: 0.6 }}
-                        className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'
-                        id="skills"
-                    >
-                        <div className='space-y-4'>
-                            <h5 className='text-primaryText text-sm md:text-base font-medium mb-4 border-b border-primaryText/20 pb-2'>
-                                Frameworks/Libraries
-                            </h5>
-                            <div className='flex flex-wrap gap-2'>
-                                {techStack.frameworksLibraries.map((item, index) => (
-                                    <IconCard key={index} url={item.url} name={item.name} />
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className='space-y-4'>
-                            <h5 className='text-primaryText text-sm md:text-base font-medium mb-4 border-b border-primaryText/20 pb-2'>
-                                Programming Languages
-                            </h5>
-                            <div className='flex flex-wrap gap-2'>
-                                {techStack.programmingLanguages.map((item, index) => (
-                                    <IconCard key={index} url={item.url} name={item.name} />
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className='space-y-4'>
-                            <h5 className='text-primaryText text-sm md:text-base font-medium mb-4 border-b border-primaryText/20 pb-2'>
-                                Tools & Platforms
-                            </h5>
-                            <div className='flex flex-wrap gap-2'>
-                                {techStack.tools.map((item, index) => (
-                                    <IconCard key={index} url={item.url} name={item.name} />
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className='space-y-4'>
-                            <h5 className='text-primaryText text-sm md:text-base font-medium mb-4 border-b border-primaryText/20 pb-2'>
-                                Databases
-                            </h5>
-                            <div className='flex flex-wrap gap-2'>
-                                {techStack.database.map((item, index) => (
-                                    <IconCard key={index} url={item.url} name={item.name} />
-                                ))}
-                            </div>
-                        </div>
-                    </motion.div>
-                </div>
+                </motion.div>
             </div>
         </section>
-        </>
     )
 }
 

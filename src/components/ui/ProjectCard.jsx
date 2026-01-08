@@ -1,89 +1,58 @@
 import { motion } from "framer-motion";
-import { Loader, Check, Github, Link } from "lucide-react";
+import { Github, ExternalLink } from "lucide-react";
 import PropTypes from "prop-types";
 
-const InComplete = () => {
-  return (
-    <div className="flex items-center font-semibold gap-1 border border-[#CA8A04] py-1 px-3 rounded-full w-fit">
-      <Loader className="animate-spin" color="#CA8A04" size={20} />
-      <h4 className="text-sm text-[#CA8A04]">On Going</h4>
-    </div>
-  );
-};
-
-const Completed = () => {
-  return (
-    <div className="flex items-center font-semibold gap-1 border border-[#16A34A] py-1 px-3 rounded-full w-fit">
-      <Check color="#16A34A" size={20} />
-      <h4 className="text-sm text-[#16A34A]">Completed</h4>
-    </div>
-  );
-};
-
-const Button = ({ link, icon, text }) => {
-  return (
-    <motion.a
-      href={link}
-      target="_blank"
-      rel="noopener noreferrer"
-      whileHover={{ scale: 1.1 }}
-      className="w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-3xl"
-      aria-label={`${text} for project`}
-    >
-      <button className="flex items-center justify-center sm:justify-start font-semibold gap-2 border border-primaryText dark:border-primaryText light:border-gray-300 rounded-3xl px-4 py-3 w-full sm:w-fit hover:bg-primaryBg dark:hover:bg-primaryBg light:hover:bg-gray-100 hover-glow transition-all duration-200">
-        {icon}
-        <h4 className="text-sm sm:text-lg text-primaryText dark:text-primaryText light:text-gray-800">{text}</h4>
-      </button>
-    </motion.a>);
-};
-
-Button.propTypes = {
-  link: PropTypes.string.isRequired,
-  icon: PropTypes.element.isRequired,
-  text: PropTypes.string.isRequired,
-};
-
-const ProjectCard = ({ title, description, summary, onGoing, github, live, technologies }) => {
+const ProjectCard = ({ title, description, summary, github, live, technologies }) => {
   return (
     <motion.div
-      className="flex flex-col p-4 sm:p-6 border-2 border-dashed border-primaryText rounded-xl overflow-hidden w-full group"
-      whileHover={{ scale: 1.02, y: -5 }}
-      transition={{ duration: 0.3 }}
+      className="group relative bg-[#111] rounded-2xl overflow-hidden border border-white/5 hover:border-white/10 transition-colors duration-300 h-full flex flex-col"
+      whileHover={{ y: -5 }}
     >
-      <div className="flex flex-col gap-2 w-full h-full">
-        <h4 className="text-lg sm:text-xl font-semibold text-primaryText group-hover:text-blue-400 transition-colors">
-          {title}
-        </h4>
-        <p className="text-sm sm:text-base text-secondaryText mb-2 font-medium">{description}</p>
 
-        {/* Project Summary */}
+      {/* Content */}
+      <div className="p-6 md:p-8 flex flex-col h-full z-10 relative">
+        <div className="flex justify-between items-start mb-4">
+          <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors duration-300">
+            {title}
+          </h3>
+          <div className="flex gap-3">
+            {github && (
+              <a href={github} target="_blank" rel="noopener noreferrer" className="text-secondaryText hover:text-white transition-colors" aria-label="Github Repo">
+                <Github size={20} />
+              </a>
+            )}
+            {live && (
+              <a href={live} target="_blank" rel="noopener noreferrer" className="text-secondaryText hover:text-white transition-colors" aria-label="Live Demo">
+                <ExternalLink size={20} />
+              </a>
+            )}
+          </div>
+        </div>
+
+        <p className="text-secondaryText mb-6 leading-relaxed flex-grow">
+          {description}
+        </p>
+
+        {/* Project Summary HTML content if needed, though simple description is cleaner */}
         {summary && (
           <div
-            className="text-sm text-secondaryText mb-4 [&>ul]:list-disc [&>ul]:pl-5 [&>ul>li]:mb-1 [&>ul>li>p]:inline"
+            className="text-xs text-secondaryText/60 mb-6 line-clamp-3 hidden"
             dangerouslySetInnerHTML={{ __html: summary }}
           />
         )}
 
-        {/* Technologies */}
-        {technologies && (
-          <div className="flex flex-wrap gap-1.5 mb-3">
-            {technologies.map((tech, index) => (
-              <span
-                key={index}
-                className="px-2 py-1 text-xs bg-blue-400/10 border border-blue-400/20 rounded-md text-blue-400"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        )}
+        <div className="flex flex-wrap gap-2 mt-auto pt-6 border-t border-white/5">
+          {technologies?.map((tech, index) => (
+            <span key={index} className="text-xs font-mono text-blue-400/80 bg-blue-500/10 px-2 py-1 rounded">
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
 
-        {onGoing !== undefined && (onGoing ? <InComplete /> : <Completed />)}
-      </div>
-      <div className="flex flex-col sm:flex-row justify-center sm:justify-end gap-4 md:gap-6 mt-3 pr-1 sm:pr-4">
-        {github && <Button icon={<Github size={24} color="#A3A3A3" />} text="Github" link={github} />}
-        {live && <Button icon={<Link size={24} color="#A3A3A3" />} text="Live Demo" link={live} />}
-      </div>
+      {/* Hover Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
     </motion.div>
   );
 };
@@ -92,7 +61,6 @@ ProjectCard.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   summary: PropTypes.string,
-  onGoing: PropTypes.bool,
   github: PropTypes.string,
   live: PropTypes.string,
   technologies: PropTypes.arrayOf(PropTypes.string),

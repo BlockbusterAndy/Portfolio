@@ -1,66 +1,90 @@
-import { Send, Phone, Mail, Linkedin, Instagram, Twitter, Youtube, Twitch, Github } from 'lucide-react'
+import { Phone, Mail, Linkedin, Instagram, Twitter, Github, ArrowUpRight } from 'lucide-react'
 import ContactForm from './ui/ContactForm'
-
 
 const Footer = () => {
     return (
-        <footer className="w-full min-h-[60vh] border-t border-secondaryText border-opacity-30" id="contact">
-            <div className="flex flex-col md:flex-row h-full w-full gap-3">
-                <div className="px-[8vw] py-[6vh] md:w-1/2 flex flex-col gap-8">
-                    <div className="flex flex-col gap-3">
-                        <h6 className="text-xl text-primaryText font-semibold">💡 Let's Collaborate!</h6>
-                        <p className="text-base text-secondaryText">Have an idea or project in mind? I'd love to hear from you. Drop me a message, and let's create something amazing together!</p>
-                        <button
-                            className="flex items-center gap-2 ml-1 mt-3 px-3 py-1.5 w-fit border border-primaryText text-primaryText rounded-xl transition duration-300 ease-in-out hover:font-semibold hover-glow"
-                            onClick={() => window.location.href = 'mailto:aniketdj19@gmail.com'}
-                            aria-label='Send Email'
-                        >
-                            Send Email
-                            <Send size={18} />
-                        </button>
+        <footer className="w-full bg-[#050505] border-t border-white/10 pt-20 pb-10" id="contact">
+            <div className="max-w-7xl mx-auto px-6 md:px-12">
+                <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 mb-20">
+
+                    {/* Left Side: Call to Action & Info */}
+                    <div className="flex-1 space-y-12">
+                        <div className="space-y-6">
+                            <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight leading-tight">
+                                Let's build something <br />
+                                <span className="bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">extraordinary.</span>
+                            </h2>
+                            <p className="text-secondaryText text-lg max-w-md leading-relaxed">
+                                Have an idea or project in mind? I'm always open to discussing new opportunities and creative collaborations.
+                            </p>
+
+                            <a
+                                href="mailto:aniketdj19@gmail.com"
+                                className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-transform hover:scale-105 duration-300"
+                            >
+                                Start a Conversation
+                                <ArrowUpRight size={20} />
+                            </a>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h6 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider opacity-60">Contact Details</h6>
+                                <div className="space-y-3">
+                                    <a href="mailto:aniketdj19@gmail.com" className="flex items-center gap-3 text-secondaryText hover:text-white transition-colors group">
+                                        <Mail size={18} className="group-hover:text-blue-400 transition-colors" />
+                                        aniketdj19@gmail.com
+                                    </a>
+                                    <a href="tel:918668443754" className="flex items-center gap-3 text-secondaryText hover:text-white transition-colors group">
+                                        <Phone size={18} className="group-hover:text-green-400 transition-colors" />
+                                        +91 866 844 3754
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h6 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider opacity-60">Follow Me</h6>
+                                <div className="flex gap-4 flex-wrap">
+                                    <SocialLink href="https://linkedin.com/in/blockbusterandy" icon={<Linkedin size={20} />} />
+                                    <SocialLink href="https://github.com/blockbusterandy" icon={<Github size={20} />} />
+                                    <SocialLink href="https://twitter.com/blockbusterandy" icon={<Twitter size={20} />} />
+                                    <SocialLink href="https://instagram.com/blockbusterandy" icon={<Instagram size={20} />} />
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="flex flex-col gap-2">
-                        <h6 className="text-xl text-primaryText font-semibold">Aniket D. Jadhav</h6>
-                        <p className="text-sm text-secondaryText">📍 Based in Pune, INDIA.</p>
-                        <div className="flex flex-col gap-1.5">
-                            <div className="flex items-center gap-2 text-secondaryText">
-                                <Phone size={18} className="inline-block" /> <span className="text-secondaryText">+91 866 844 3754</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-secondaryText">
-                                <Mail size={18} className="inline-block" /> <a href="mailto:aniketdj19@gmail.com"><span className="text-secondaryText">aniketdj19@gmail.com</span></a>
-                            </div>
+                    {/* Right Side: Form */}
+                    <div className="lg:w-[450px]">
+                        <div className="bg-white/5 border border-white/10 p-8 rounded-3xl">
+                            <h3 className="text-2xl font-bold text-white mb-6">Send a Message</h3>
+                            <ContactForm />
                         </div>
                     </div>
-
-                    <div className="flex flex-col gap-3">
-                        <h6 className="text-xl text-primaryText font-semibold">Socials</h6>
-                        <div className="hidden md:flex gap-8 mt-2 text-secondaryText">
-                            <a href="https://linkedin.com/in/blockbusterandy/" target="_blank" rel="noopener noreferrer"><Linkedin size={40} className="inline-block hover-icon" /></a>
-                            <a href="https://github.com/blockbusterandy" target="_blank" rel="noopener noreferrer"><Github size={40} className="inline-block hover-icon" /></a>
-                            <a href="https://instagram.com/blockbusterandy" target="_blank" rel="noopener noreferrer"><Instagram size={40} className="inline-block hover-icon" /></a>
-                            <a href="https://x.com/blockbusterandy" target="_blank" rel="noopener noreferrer"><Twitter size={40} className="inline-block hover-icon" /></a>
-                            <a href="https://youtube.com/blockbusterandy" target="_blank" rel="noopener noreferrer"><Youtube size={40} className="inline-block hover-icon" /></a>
-                            <a href="https://twitch.com/blockbusterandy" target="_blank" rel="noopener noreferrer"><Twitch size={40} className="inline-block hover-icon" /></a>
-                        </div>
-                        <div className="flex flex-wrap gap-6 mt-2 text-secondaryText md:hidden">
-                            <a href="https://linkedin.com/in/blockbusterandy/" target="_blank" rel="noopener noreferrer"><Linkedin size={22} className="inline-block hover-icon" /></a>
-                            <a href="https://github.com/blockbusterandy" target="_blank" rel="noopener noreferrer"><Github size={22} className="inline-block hover-icon" /></a>
-                            <a href="https://instagram.com/blockbusterandy" target="_blank" rel="noopener noreferrer"><Instagram size={22} className="inline-block hover-icon" /></a>
-                            <a href="https://x.com/blockbusterandy" target="_blank" rel="noopener noreferrer"><Twitter size={22} className="inline-block hover-icon" /></a>
-                            <a href="https://youtube.com/blockbusterandy" target="_blank" rel="noopener noreferrer"><Youtube size={22} className="inline-block hover-icon" /></a>
-                            <a href="https://twitch.com/blockbusterandy" target="_blank" rel="noopener noreferrer"><Twitch size={22} className="inline-block hover-icon" /></a>
-                        </div>
-                    </div>            </div>
-                <div className="px-[8vw] py-[6vh] md:w-1/2">
-                    <ContactForm />
                 </div>
-            </div>
-            <div className="flex justify-center items-center w-full h-12 bg-primaryText text-primaryBg text-base text-center font-semibold">
-                © 2024 Aniket D. Jadhav. All rights reserved.
+
+                {/* Bottom Bar */}
+                <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-secondaryText/60">
+                    <p>© 2025 Aniket Jadhav. All rights reserved.</p>
+                    <div className="flex gap-6">
+                        <span className="cursor-pointer hover:text-white transition-colors">Privacy Policy</span>
+                        <span className="cursor-pointer hover:text-white transition-colors">Terms of Service</span>
+                    </div>
+                </div>
             </div>
         </footer>
     )
 }
+
+const SocialLink = ({ href, icon }) => (
+    <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-secondaryText hover:bg-white hover:text-black hover:border-white transition-all duration-300"
+    >
+        {icon}
+    </a>
+)
 
 export default Footer
