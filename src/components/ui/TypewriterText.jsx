@@ -13,7 +13,7 @@ const TypewriterText = ({ words }) => {
     }, [words.length]);
 
     return (
-        <span className="inline-block relative w-[120px] lg:w-[150px] text-left">
+        <span className="inline-block relative text-left">
             <AnimatePresence mode="wait">
                 <motion.span
                     key={words[index]}

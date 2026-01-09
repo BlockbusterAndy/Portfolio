@@ -74,8 +74,8 @@ const Hero = () => {
             initial="initial"
             animate="animate"
           >
-            <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.1] mb-6">
-              Building <TypewriterText words={["digital", "scalable", "modern", "robust"]} /> <br className="hidden md:block" />
+            <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.1] mb-6 text-center md:text-left">
+              Building <TypewriterText words={["digital", "scalable", "modern", "robust"]} /> <br />
               <span className="bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">experiences</span> that matter.
             </motion.h1>
 
