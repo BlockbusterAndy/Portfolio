@@ -50,9 +50,9 @@ const PortfolioPage = () => {
 
       {!isLoading && (
         <>
-          <ScrollProgress />
           <SEO />
           <Navbar />
+          <ScrollProgress />
           <Hero />
           <AboutSection />
           <Marquee />
