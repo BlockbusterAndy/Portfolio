@@ -67,7 +67,7 @@ const Navbar = () => {
 
                     {/* Logo */}
                     <div
-                        className="text-white font-bold text-xl tracking-wider cursor-pointer z-50 relative"
+                        className="flex items-center text-white font-bold text-2xl tracking-wider cursor-pointer z-50 relative"
                         onClick={() => scrollToSection('hero_section')}
                     >
                         aJ<span className="text-blue-400">.</span>

@@ -67,8 +67,8 @@ const Footer = () => {
                 <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-secondaryText/60">
                     <p>© 2025 Aniket Jadhav. All rights reserved.</p>
                     <div className="flex gap-6">
-                        <span className="cursor-pointer hover:text-white transition-colors">Privacy Policy</span>
-                        <span className="cursor-pointer hover:text-white transition-colors">Terms of Service</span>
+                        {/* <span className="cursor-pointer hover:text-white transition-colors">Privacy Policy</span>
+                        <span className="cursor-pointer hover:text-white transition-colors">Terms of Service</span> */}
                     </div>
                 </div>
             </div>

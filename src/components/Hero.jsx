@@ -48,7 +48,6 @@ const Hero = () => {
 
       {/* Background Ambience */}
       <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-green-500/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-6 md:px-12 relative z-10">
 

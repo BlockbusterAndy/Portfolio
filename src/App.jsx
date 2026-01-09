@@ -12,6 +12,7 @@ import LoadingScreen from "./components/ui/LoadingScreen"
 import PerformanceMonitor from "./components/ui/PerformanceMonitor"
 import DevTools from "./components/ui/DevTools"
 import ScrollToTop from "./components/ui/ScrollToTop"
+import SEO from "./components/SEO"
 
 
 // Main Portfolio Page Component
@@ -47,7 +48,9 @@ const PortfolioPage = () => {
       </AnimatePresence>
 
       {!isLoading && (
-        <>          <Navbar />
+        <>
+          <SEO />
+          <Navbar />
           <Hero />
           <AboutSection />
           <Marquee />
@@ -66,7 +69,6 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<PortfolioPage />} />
-
       </Routes>
     </Router>
   )
