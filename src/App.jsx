@@ -57,7 +57,7 @@ const PortfolioPage = () => {
           <AboutSection />
           <Marquee />
           <ProjectsSection />
-          <TestimonialsSection />
+          {/* <TestimonialsSection /> */}
           <Footer />
           <ScrollToTop />
         </>
