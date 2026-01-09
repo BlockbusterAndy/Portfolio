@@ -9,6 +9,8 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #333 #0A0A0A;
 }
 
 body {
@@ -81,7 +83,6 @@ body {
 }
 
 /* Improved focus styles for accessibility */
-/* Improved focus styles for accessibility */
 button:focus-visible, 
 a:focus-visible {
   outline: 2px solid #60a5fa;
@@ -99,4 +100,23 @@ a:focus-visible {
   .floating-animation {
     animation: none;
   }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 5px;
+  border: 2px solid #0A0A0A;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

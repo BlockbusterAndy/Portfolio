@@ -1,9 +1,7 @@
 import { Linkedin, Github, Download, Mail, ExternalLink } from "lucide-react";
-
-
 import TechPill from "./ui/TechPill";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import TypewriterText from "./ui/TypewriterText";
 
 const Hero = () => {
   const resumeUrl = "https://res.cloudinary.com/dzflqtsc4/image/upload/v1740565464/Aniket_Jadhav_8668443754_ulxzdp.pdf";
@@ -77,7 +75,7 @@ const Hero = () => {
             animate="animate"
           >
             <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.1] mb-6">
-              Building <span className="text-secondaryText">digital</span> <br className="hidden md:block" />
+              Building <TypewriterText words={["digital", "scalable", "modern", "robust"]} /> <br className="hidden md:block" />
               <span className="bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">experiences</span> that matter.
             </motion.h1>
 
@@ -130,21 +128,6 @@ const Hero = () => {
                 fetchPriority="high"
                 className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
               />
-
-              {/* Floating Badge 1 */}
-              {/* <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute bottom-6 left-6 bg-black/60 backdrop-blur-md border border-white/10 p-4 rounded-xl flex items-center gap-3 shadow-lg"
-              >
-                <div className="bg-green-500/20 p-2 rounded-lg">
-                  <div className="text-green-400 font-bold text-xl">10+</div>
-                </div>
-                <div>
-                  <div className="text-xs text-secondaryText uppercase font-bold tracking-wider">Projects</div>
-                  <div className="text-white text-sm font-medium">Completed</div>
-                </div>
-              </motion.div> */}
             </div>
           </motion.div>
 

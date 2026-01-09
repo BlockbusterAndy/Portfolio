@@ -13,6 +13,7 @@ import PerformanceMonitor from "./components/ui/PerformanceMonitor"
 import DevTools from "./components/ui/DevTools"
 import ScrollToTop from "./components/ui/ScrollToTop"
 import SEO from "./components/SEO"
+import ScrollProgress from "./components/ui/ScrollProgress"
 
 
 // Main Portfolio Page Component
@@ -49,13 +50,14 @@ const PortfolioPage = () => {
 
       {!isLoading && (
         <>
+          <ScrollProgress />
           <SEO />
           <Navbar />
           <Hero />
           <AboutSection />
           <Marquee />
           <ProjectsSection />
-          {/* <TestimonialsSection /> */}
+          <TestimonialsSection />
           <Footer />
           <ScrollToTop />
         </>
