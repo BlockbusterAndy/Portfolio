@@ -127,6 +127,7 @@ const Hero = () => {
               <img
                 src="/web_dev.png"
                 alt="Aniket Jadhav"
+                fetchPriority="high"
                 className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
               />
 
