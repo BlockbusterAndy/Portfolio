@@ -62,6 +62,7 @@ const ProjectsSection = () => {
                 title={project.name}
                 description={project.description}
                 summary={project.summary}
+                highlights={project.highlights}
                 github={project.github?.href}
                 live={project.url?.href}
                 technologies={project.keywords}

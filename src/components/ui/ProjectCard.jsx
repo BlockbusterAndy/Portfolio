@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Github, ExternalLink } from "lucide-react";
 import PropTypes from "prop-types";
 
-const ProjectCard = ({ title, description, summary, github, live, technologies }) => {
+const ProjectCard = ({ title, description, summary, highlights, github, live, technologies }) => {
   return (
     <motion.div
       className="group relative bg-[#111] rounded-2xl overflow-hidden border border-white/5 hover:border-white/10 transition-colors duration-300 h-full flex flex-col"
@@ -33,6 +33,16 @@ const ProjectCard = ({ title, description, summary, github, live, technologies }
           {description}
         </p>
 
+        {highlights?.length > 0 && (
+          <ul className="mb-6 space-y-2 pl-4 text-sm leading-relaxed text-secondaryText">
+            {highlights.map((highlight) => (
+              <li key={highlight} className="relative before:absolute before:-left-[17px] before:top-2 before:h-1.5 before:w-1.5 before:rounded-full before:bg-blue-400">
+                {highlight}
+              </li>
+            ))}
+          </ul>
+        )}
+
         {/* Project Summary HTML content if needed, though simple description is cleaner */}
         {summary && (
           <div
@@ -61,6 +71,7 @@ ProjectCard.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   summary: PropTypes.string,
+  highlights: PropTypes.arrayOf(PropTypes.string),
   github: PropTypes.string,
   live: PropTypes.string,
   technologies: PropTypes.arrayOf(PropTypes.string),
