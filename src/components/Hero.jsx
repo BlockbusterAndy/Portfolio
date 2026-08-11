@@ -42,19 +42,19 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative w-full min-h-[90vh] flex flex-col justify-center overflow-hidden pt-20 pb-10" id="hero_section">
+    <section className="relative flex min-h-[680px] w-full flex-col justify-center overflow-hidden pb-16 pt-28 lg:min-h-[720px] lg:pt-32" id="hero_section">
 
       {/* Background Ambience */}
       <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12">
 
         {/* Status Badge */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="flex justify-center md:justify-start mb-8"
+          className="mb-6 flex justify-center md:justify-start"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 backdrop-blur-sm">
             <span className="relative flex h-2.5 w-2.5">
@@ -65,25 +65,25 @@ const Hero = () => {
           </div>
         </motion.div>
 
-        <div className="flex flex-col md:flex-row items-center gap-12 lg:gap-20">
+        <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-[minmax(0,1fr)_minmax(280px,0.9fr)] lg:gap-16">
 
           {/* Left Content */}
           <motion.div
-            className="flex-1 text-center md:text-left"
+            className="text-center md:text-left"
             variants={staggerContainer}
             initial="initial"
             animate="animate"
           >
-            <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.1] mb-6 text-center md:text-left">
-              Building <TypewriterText words={["digital", "scalable", "modern", "robust"]} /> <br />
-              <span className="bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">experiences</span> that matter.
+            <motion.h1 variants={fadeInUp} className="mb-6 text-center text-5xl font-bold leading-[1.02] tracking-tight text-white sm:text-6xl md:text-left md:text-5xl lg:text-6xl xl:text-7xl">
+              I build <br />
+              <span className="bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent"><TypewriterText words={["web products.", "game systems.", "interactive tools."]} /></span>
             </motion.h1>
 
-            <motion.p variants={fadeInUp} className="text-secondaryText text-lg md:text-xl leading-relaxed max-w-2xl mx-auto md:mx-0 mb-8">
-              Hi, I'm <span className="text-white font-semibold">Aniket Jadhav</span>. A Full-Stack Developer & Designer crafting seamless, user-centric interfaces with modern technologies.
+            <motion.p variants={fadeInUp} className="mx-auto mb-8 max-w-xl text-lg leading-relaxed text-secondaryText md:mx-0 md:text-xl">
+              Hi, I'm <span className="text-white font-semibold">Aniket Jadhav</span>. A Full-Stack Developer and indie game developer crafting polished web applications and interactive experiences.
             </motion.p>
 
-            <motion.div variants={fadeInUp} className="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-10">
+            <motion.div variants={fadeInUp} className="mb-9 flex flex-wrap items-center justify-center gap-3 md:justify-start">
               <button
                 onClick={openWhatsApp}
                 className="px-8 py-3.5 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-all duration-300 transform hover:scale-[1.02] active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.3)] flex items-center gap-2"
@@ -101,13 +101,19 @@ const Hero = () => {
             </motion.div>
 
             {/* Tech Stack Preview */}
-            <motion.div variants={fadeInUp} className="flex flex-col items-center md:items-start gap-4">
+            <motion.div variants={fadeInUp} className="flex flex-col items-center gap-3 md:items-start">
               <span className="text-sm text-secondaryText uppercase tracking-widest font-medium">Tech Stack</span>
               <div className="flex flex-wrap justify-center md:justify-start gap-2">
                 {["React", "Next.js", "Node.js", "TypeScript", "Tailwind"].map((tech, index) => (
                   <TechPill key={tech} tech={tech} index={index} />
                 ))}
               </div>
+            </motion.div>
+
+            <motion.div variants={fadeInUp} className="mt-8 flex items-center justify-center gap-6 text-secondaryText md:justify-start xl:hidden">
+              <a href="https://linkedin.com/in/blockbusterandy" target="_blank" rel="noreferrer" className="transition-colors hover:text-blue-400" aria-label="LinkedIn"><Linkedin size={21} /></a>
+              <a href="https://github.com/blockbusterandy" target="_blank" rel="noreferrer" className="transition-colors hover:text-white" aria-label="GitHub"><Github size={21} /></a>
+              <a href="mailto:aniketdj19@gmail.com" className="transition-colors hover:text-green-400" aria-label="Email"><Mail size={21} /></a>
             </motion.div>
           </motion.div>
 
@@ -116,7 +122,7 @@ const Hero = () => {
             initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative w-full max-w-md md:max-w-[400px] aspect-square"
+            className="relative mx-auto aspect-square w-full max-w-[280px] sm:max-w-sm md:max-w-[330px] lg:max-w-[390px]"
           >
             {/* Glow effect behind image */}
             <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-green-500/20 rounded-full blur-3xl animate-pulse"></div>
@@ -138,23 +144,11 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 1 }}
-          className="hidden lg:flex flex-col gap-6 absolute right-0 top-1/2 -translate-y-1/2"
+          className="absolute right-0 top-1/2 hidden -translate-y-1/2 flex-col gap-6 xl:flex"
         >
           <a href="https://linkedin.com/in/blockbusterandy" target="_blank" rel="noreferrer" className="text-secondaryText hover:text-blue-400 transition-colors p-2"><Linkedin size={24} /></a>
           <a href="https://github.com/blockbusterandy" target="_blank" rel="noreferrer" className="text-secondaryText hover:text-white transition-colors p-2"><Github size={24} /></a>
           <a href="mailto:aniketdj19@gmail.com" className="text-secondaryText hover:text-green-400 transition-colors p-2"><Mail size={24} /></a>
-        </motion.div>
-
-        {/* Mobile Socials */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          className="flex lg:hidden justify-center gap-8 mt-12 text-secondaryText"
-        >
-          <a href="https://linkedin.com/in/blockbusterandy" target="_blank" rel="noreferrer" className="hover:text-blue-400 transition-colors"><Linkedin size={24} /></a>
-          <a href="https://github.com/blockbusterandy" target="_blank" rel="noreferrer" className="hover:text-white transition-colors"><Github size={24} /></a>
-          <a href="mailto:aniketdj19@gmail.com" className="hover:text-green-400 transition-colors p-2"><Mail size={24} /></a>
         </motion.div>
 
         {/* Scroll Indicator */}
@@ -162,7 +156,7 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 1 }}
-          className="absolute bottom-4 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 cursor-pointer"
+          className="absolute bottom-0 left-1/2 hidden -translate-x-1/2 cursor-pointer flex-col items-center gap-2 xl:flex"
           onClick={() => scrollToSection('aboutMeSection')}
         >
           <span className="text-[10px] text-secondaryText tracking-[0.2em] uppercase">Scroll</span>

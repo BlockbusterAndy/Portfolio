@@ -1,24 +1,31 @@
-import { CodeXml, DraftingCompass, Gamepad2, GraduationCap, Briefcase } from 'lucide-react'
+import { CodeXml, Gamepad2, Briefcase } from 'lucide-react'
 import { motion } from 'framer-motion'
 import IconCard from './IconCard'
 import SkillBar from './ui/SkillBar'
 
 const AboutSection = () => {
     const techStack = {
-        frameworksLibraries: [
+        frontend: [
             { name: "React", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
             { name: "Redux", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redux/redux-original.svg" },
             { name: "NextJS", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" },
-            { name: "Expressjs", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg" },
-            { name: "Nodejs", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
             { name: "TailwindCSS", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" },
             { name: "Framer Motion", url: "/logos/motion.svg" },
+        ],
+        backend: [
+            { name: "Expressjs", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg" },
+            { name: "Nodejs", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
         ],
         programmingLanguages: [
             { name: "JavaScript", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" },
             { name: "TypeScript", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" },
+            { name: "C#", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" },
             { name: "Python", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
             { name: "Java", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" },
+        ],
+        gameDevelopment: [
+            { name: "Unity", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/unity/unity-original.svg" },
+            { name: "Blender", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg" },
         ],
         tools: [
             { name: "Figma", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" },
@@ -30,7 +37,7 @@ const AboutSection = () => {
             { name: "ViteJS", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg" },
             { name: "FireBase", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg" },
         ],
-        database: [
+        data: [
             { name: "MongoDB", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" },
             { name: "MySQL", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" },
             { name: "PostgreSQL", url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" },
@@ -80,8 +87,7 @@ const AboutSection = () => {
                         <div className="space-y-8">
                             <div className='prose prose-lg prose-invert text-secondaryText'>
                                 <p className="leading-relaxed">
-                                    I'm a passionate full-stack developer who bridges the gap between functional code and beautiful design.
-                                    With a strong foundation in the MERN stack and a keen eye for UI/UX, I build digital products that look good and work seamlessly.
+                                    Full-Stack Developer and indie game developer with hands-on experience building scalable web applications and interactive experiences. On the web side, I deliver React-based dashboards, responsive UIs with Tailwind CSS, and REST APIs using Node.js and Express; on the game dev side, I design and build systems in Unity/C#, bringing the same attention to performance and clean architecture. I enjoy turning product requirements into clean, performant solutions and thrive in environments where ownership, learning, and impact matter.
                                 </p>
                             </div>
 
@@ -103,10 +109,10 @@ const AboutSection = () => {
                                     whileHover={{ y: -5 }}
                                 >
                                     <h3 className='text-xl font-semibold text-white mb-3 flex items-center gap-2'>
-                                        <DraftingCompass size={20} className="text-green-400" /> Design
+                                        <Gamepad2 size={20} className="text-green-400" /> Game Development
                                     </h3>
                                     <p className='text-sm text-secondaryText leading-relaxed'>
-                                        Crafting intuitive UI/UX with <strong>Figma</strong>. I believe simplicity is the ultimate sophistication.
+                                        Designing interactive systems with <strong>Unity</strong> and <strong>C#</strong>, with the same focus on performance and clean architecture.
                                     </p>
                                 </motion.div>
                             </div>
@@ -118,7 +124,7 @@ const AboutSection = () => {
                                     <SkillBar skill="JavaScript/TypeScript" percentage={90} delay={0.2} />
                                     <SkillBar skill="React & Next.js" percentage={85} delay={0.4} />
                                     <SkillBar skill="Node.js & Express" percentage={80} delay={0.6} />
-                                    <SkillBar skill="Database Design" percentage={70} delay={0.8} />
+                                    <SkillBar skill="Unity & C#" percentage={75} delay={0.8} />
                                 </div>
                             </div>
 
@@ -137,7 +143,7 @@ const AboutSection = () => {
                                 <div className="relative">
                                     <div className="absolute -left-[41px] top-0 w-5 h-5 bg-blue-500 rounded-full border-4 border-[#0A0A0A] shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
                                     <div className="mb-2">
-                                        <span className="text-xs font-mono text-blue-400 px-2 py-1 bg-blue-500/10 rounded">Nov 2025 - Present</span>
+                                        <span className="text-xs font-mono text-blue-400 px-2 py-1 bg-blue-500/10 rounded">Nov 2025 - March 2026</span>
                                     </div>
                                     <h4 className="text-xl font-bold text-white">Full-Stack Developer</h4>
                                     <p className="text-secondaryText text-sm mb-2">Muncho Technologies Pvt. Ltd.</p>
@@ -194,22 +200,31 @@ const AboutSection = () => {
                         viewport={{ once: true, margin: "-50px" }}
                         className='mt-24'
                     >
-                        <h3 className='text-3xl font-bold text-white mb-10 text-center'>Technologies I Use</h3>
+                        <div className="mb-10 text-center">
+                            <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-blue-400">Toolkit</p>
+                            <h3 className='text-3xl font-bold text-white'>Technologies I Use</h3>
+                            <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-secondaryText">A focused toolkit for shipping polished web products and interactive 3D experiences.</p>
+                        </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-1 items-start gap-5 md:grid-cols-2 xl:grid-cols-3">
                             {[
-                                { title: "Frontend & Frameworks", icons: techStack.frameworksLibraries },
+                                { title: "Frontend", icons: techStack.frontend },
+                                { title: "Backend & APIs", icons: techStack.backend },
                                 { title: "Languages", icons: techStack.programmingLanguages },
-                                { title: "Tools", icons: techStack.tools },
-                                { title: "Databases", icons: techStack.database },
+                                { title: "Game Development", icons: techStack.gameDevelopment },
+                                { title: "Workflow", icons: techStack.tools },
+                                { title: "Data", icons: techStack.data },
                             ].map((category, idx) => (
                                 <motion.div
                                     key={idx}
                                     variants={itemVariants}
-                                    className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors duration-300"
+                                    className="group self-start rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/30 hover:bg-white/[0.06]"
                                 >
-                                    <h4 className="text-white font-semibold mb-4 border-b border-white/10 pb-2">{category.title}</h4>
-                                    <div className="flex flex-wrap gap-3">
+                                    <div className="mb-5 flex items-center justify-between border-b border-white/10 pb-3">
+                                        <h4 className="font-semibold text-white">{category.title}</h4>
+                                        <span className="rounded-full bg-white/5 px-2.5 py-1 font-mono text-[10px] text-secondaryText">{category.icons.length}</span>
+                                    </div>
+                                    <div className="flex flex-wrap gap-2.5">
                                         {category.icons.map((icon, iconIdx) => (
                                             <IconCard key={iconIdx} url={icon.url} name={icon.name} />
                                         ))}
