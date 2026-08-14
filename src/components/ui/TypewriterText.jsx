@@ -13,7 +13,18 @@ const TypewriterText = ({ words }) => {
     }, [words.length]);
 
     return (
-        <span className="inline-block relative text-left">
+        // inline-grid: every word occupies the same cell, so the box is always
+        // sized to the LONGEST word (and its wrapped height). No overflow.
+        <span className="inline-grid max-w-full align-top text-left">
+            {words.map((word) => (
+                <span
+                    key={word}
+                    aria-hidden="true"
+                    className="col-start-1 row-start-1 invisible"
+                >
+                    {word}
+                </span>
+            ))}
             <AnimatePresence mode="wait">
                 <motion.span
                     key={words[index]}
@@ -21,12 +32,11 @@ const TypewriterText = ({ words }) => {
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -20, opacity: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute top-0 left-0 text-secondaryText"
+                    className="col-start-1 row-start-1 text-secondaryText"
                 >
                     {words[index]}
                 </motion.span>
             </AnimatePresence>
-            <span className="invisible">{words[0]}</span> {/* Spacer */}
         </span>
     );
 };
