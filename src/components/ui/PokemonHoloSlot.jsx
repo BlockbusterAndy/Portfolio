@@ -4,8 +4,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import HoloCard from "./HoloCard";
 import { fetchPokemon, randomDexId } from "../../lib/pokemon";
 
+/** First card on load is always Gengar; the button draws at random from there. */
+const DEFAULT_POKEMON = "gengar";
+
 /**
- * Random Pokémon holo card (PokéAPI) with a button to draw another one.
+ * Pokémon holo card (PokéAPI) with a button to draw a random one.
  */
 const PokemonHoloSlot = () => {
   const [pokemon, setPokemon] = useState(null);
@@ -13,13 +16,13 @@ const PokemonHoloSlot = () => {
   const [error, setError] = useState("");
   const requestRef = useRef(0);
 
-  const draw = useCallback(async () => {
+  const load = useCallback(async (nameOrId) => {
     const requestId = ++requestRef.current;
     setStatus("loading");
     setError("");
 
     try {
-      const next = await fetchPokemon(randomDexId(pokemon?.id));
+      const next = await fetchPokemon(nameOrId);
       if (requestId !== requestRef.current) return;
       setPokemon(next);
       setStatus("ready");
@@ -28,28 +31,17 @@ const PokemonHoloSlot = () => {
       setError(fetchError.message);
       setStatus("error");
     }
-  }, [pokemon?.id]);
-
-  useEffect(() => {
-    let cancelled = false;
-    const requestId = ++requestRef.current;
-
-    fetchPokemon(randomDexId())
-      .then((next) => {
-        if (cancelled || requestId !== requestRef.current) return;
-        setPokemon(next);
-        setStatus("ready");
-      })
-      .catch((fetchError) => {
-        if (cancelled || requestId !== requestRef.current) return;
-        setError(fetchError.message);
-        setStatus("error");
-      });
-
-    return () => {
-      cancelled = true;
-    };
   }, []);
+
+  const draw = useCallback(
+    () => load(randomDexId(pokemon?.id)),
+    [load, pokemon?.id],
+  );
+
+  // First paint: always Gengar.
+  useEffect(() => {
+    load(DEFAULT_POKEMON);
+  }, [load]);
 
   return (
     <div className="holo-slot">
@@ -69,7 +61,9 @@ const PokemonHoloSlot = () => {
       ) : status === "error" ? (
         <div className="holo-skeleton">
           <span>Pokédex link lost</span>
-          <button type="button" onClick={draw}>Retry</button>
+          <button type="button" onClick={() => load(pokemon ? randomDexId(pokemon.id) : DEFAULT_POKEMON)}>
+            Retry
+          </button>
           <span className="sr-only">{error}</span>
         </div>
       ) : (
