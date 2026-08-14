@@ -15,7 +15,9 @@ const TypewriterText = ({ words }) => {
     return (
         // inline-grid: every word occupies the same cell, so the box is always
         // sized to the LONGEST word (and its wrapped height). No overflow.
-        <span className="inline-grid max-w-full align-top text-left">
+        // The box is sized for the longest word, so shorter words must be
+        // centred inside it to match the centred heading on mobile.
+        <span className="inline-grid max-w-full align-top text-center md:text-left">
             {words.map((word) => (
                 <span
                     key={word}
