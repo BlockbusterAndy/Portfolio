@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, CheckCircle, AlertCircle } from 'lucide-react';
-import PropTypes from 'prop-types';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -22,9 +21,8 @@ const ContactForm = () => {
     try {
       e.preventDefault();
       setStatus('loading');
-      const url = "https://formspree.io/f/xvgqjwod"
 
-      const response = await fetch(url, {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -129,7 +127,5 @@ const ContactForm = () => {
     </motion.div>
   );
 };
-
-ContactForm.propTypes = {};
 
 export default ContactForm;
