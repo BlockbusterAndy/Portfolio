@@ -2,6 +2,7 @@ import { Linkedin, Github, Download, Mail, ExternalLink } from "lucide-react";
 import TechPill from "./ui/TechPill";
 import { motion } from "framer-motion";
 import TypewriterText from "./ui/TypewriterText";
+import PokemonHoloSlot from "./ui/PokemonHoloSlot";
 
 const Hero = () => {
   const resumeUrl = "https://res.cloudinary.com/dzflqtsc4/image/upload/v1740565464/Aniket_Jadhav_8668443754_ulxzdp.pdf";
@@ -42,7 +43,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative flex min-h-[680px] w-full flex-col justify-center overflow-hidden pb-16 pt-28 lg:min-h-[720px] lg:pt-32" id="hero_section">
+    <section className="relative flex min-h-[680px] w-full flex-col justify-center pb-16 pt-28 lg:min-h-[820px] lg:pt-32" id="hero_section">
 
       {/* Background Ambience */}
       <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
@@ -74,7 +75,7 @@ const Hero = () => {
             initial="initial"
             animate="animate"
           >
-            <motion.h1 variants={fadeInUp} className="mb-6 text-center text-5xl font-bold leading-[1.02] tracking-tight text-white sm:text-6xl md:text-left md:text-5xl lg:text-6xl xl:text-7xl">
+            <motion.h1 variants={fadeInUp} className="mb-6 max-w-full text-center text-4xl font-bold leading-[1.08] tracking-tight text-white [overflow-wrap:break-word] sm:text-5xl md:text-left md:text-5xl lg:text-6xl xl:text-[4rem]">
               I build <br />
               <span className="bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent"><TypewriterText words={["web products.", "game systems.", "interactive tools."]} /></span>
             </motion.h1>
@@ -122,18 +123,13 @@ const Hero = () => {
             initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative mx-auto aspect-square w-full max-w-[280px] sm:max-w-sm md:max-w-[330px] lg:max-w-[390px]"
+            className="relative mx-auto w-full max-w-[300px] sm:max-w-[340px] md:max-w-[330px] lg:max-w-[380px]"
           >
-            {/* Glow effect behind image */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-green-500/20 rounded-full blur-3xl animate-pulse"></div>
+            {/* Glow effect behind card */}
+            <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-tr from-blue-500/20 to-green-500/20 blur-3xl" />
 
-            <div className="relative h-full w-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-[#0F0F0F]">
-              <img
-                src="/web_dev.png"
-                alt="Aniket Jadhav"
-                fetchPriority="high"
-                className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
-              />
+            <div className="relative">
+              <PokemonHoloSlot />
             </div>
           </motion.div>
 
